@@ -25,7 +25,7 @@ export default function InterCityRoutesPage() {
   return (
     <div className="flex flex-col h-full bg-muted/30">
       <header className="p-4 flex items-center gap-4 border-b bg-background sticky top-0 z-10">
-        <Link href="/">
+        <Link href="/home">
           <Button variant="ghost" size="icon">
             <ArrowLeft className="h-6 w-6" />
           </Button>

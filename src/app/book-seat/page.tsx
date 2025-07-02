@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
 import { ArrowLeft, Minus, Plus, CalendarDays, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -15,6 +15,7 @@ import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
 
 export default function BookSeatPage() {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const priceParam = searchParams.get('price');
   const basePrice = priceParam ? parseInt(priceParam, 10) : 0;
@@ -32,11 +33,9 @@ export default function BookSeatPage() {
   return (
     <div className="flex flex-col h-full bg-muted/30">
       <header className="p-4 flex items-center gap-4 border-b bg-background sticky top-0 z-10">
-        <Link href="/">
-          <Button variant="ghost" size="icon">
-            <ArrowLeft className="h-6 w-6" />
-          </Button>
-        </Link>
+        <Button variant="ghost" size="icon" onClick={() => router.back()}>
+          <ArrowLeft className="h-6 w-6" />
+        </Button>
         <h1 className="text-xl font-bold font-headline">Book a seat</h1>
       </header>
 

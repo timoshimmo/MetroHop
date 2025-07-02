@@ -69,7 +69,7 @@ export default function BookingSuccessfulPage() {
       </main>
       
       <footer className="p-4 border-t bg-background sticky bottom-0 z-10">
-        <Link href="/" className="w-full">
+        <Link href="/home" className="w-full">
             <Button size="lg" className="w-full h-14 text-lg font-bold">
             Back to Home
             </Button>

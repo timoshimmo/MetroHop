@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { GoogleMap, useJsApiLoader, MarkerF } from '@react-google-maps/api';
+import { GoogleMap, useJsApiLoader, MarkerF, PolylineF } from '@react-google-maps/api';
 
 const containerStyle = {
   width: '100%',
@@ -19,7 +19,7 @@ interface MapProps {
 
 // IMPORTANT: Replace this with your actual Google Maps API key.
 // You can get one from the Google Cloud Console.
-const API_KEY = 'YOUR_GOOGLE_MAPS_API_KEY_HERE';
+const API_KEY = 'AIzaSyDdvxkcx9kamfF4kBQmcQfURxO7V_NdhnY';
 
 export function Map({ stops }: MapProps) {
   const { isLoaded, loadError } = useJsApiLoader({
@@ -27,14 +27,24 @@ export function Map({ stops }: MapProps) {
     googleMapsApiKey: API_KEY,
   });
 
+  const path = React.useMemo(
+    () =>
+      stops
+        .filter((stop) => stop.lat && stop.lng)
+        .map((stop) => ({ lat: stop.lat!, lng: stop.lng! })),
+    [stops]
+  );
+  
   const center = React.useMemo(() => {
-    if (stops.length > 0 && stops[0].lat && stops[0].lng) {
-      // Center the map around the first stop
-      return { lat: stops[0].lat, lng: stops[0].lng };
+    if (path.length > 0) {
+      const avgLat = path.reduce((sum, point) => sum + point.lat, 0) / path.length;
+      const avgLng = path.reduce((sum, point) => sum + point.lng, 0) / path.length;
+      return { lat: avgLat, lng: avgLng };
     }
     // Default center if no stops or no coords
     return { lat: 6.45, lng: 3.55 };
-  }, [stops]);
+  }, [path]);
+
 
   if (loadError) {
     return (
@@ -64,7 +74,7 @@ export function Map({ stops }: MapProps) {
     <GoogleMap
       mapContainerStyle={containerStyle}
       center={center}
-      zoom={12}
+      zoom={13}
       options={{
         disableDefaultUI: true,
         zoomControl: true,
@@ -78,6 +88,16 @@ export function Map({ stops }: MapProps) {
             title={stop.name}
           />
         ) : null
+      )}
+       {path.length > 1 && (
+        <PolylineF
+          path={path}
+          options={{
+            strokeColor: '#20CC8A', // Corresponds to primary color hsl(173, 80%, 40%)
+            strokeOpacity: 0.9,
+            strokeWeight: 5,
+          }}
+        />
       )}
     </GoogleMap>
   );

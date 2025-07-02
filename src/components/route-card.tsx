@@ -4,6 +4,7 @@ import { Separator } from '@/components/ui/separator';
 import { Badge } from '@/components/ui/badge';
 import { ArrowRight, Bus, Clock, MapPin } from 'lucide-react';
 import type { Trip } from '@/lib/types';
+import Link from 'next/link';
 
 interface RouteCardProps {
   trip: Trip;
@@ -46,10 +47,12 @@ export function RouteCard({ trip, showStatus = false }: RouteCardProps) {
       </CardContent>
       <CardFooter className="bg-muted/50 p-4 flex justify-between items-center">
         <p className="font-bold text-lg text-primary">₦{trip.price}</p>
-        <Button size="sm">
-          View Details
-          <ArrowRight className="ml-2 h-4 w-4" />
-        </Button>
+        <Link href={`/routes/${trip.id}`}>
+            <Button size="sm">
+            View Details
+            <ArrowRight className="ml-2 h-4 w-4" />
+            </Button>
+        </Link>
       </CardFooter>
     </Card>
   );

@@ -65,9 +65,11 @@ export default function PaymentPage() {
       </main>
 
       <footer className="p-4 border-t bg-background sticky bottom-0 z-10">
-        <Button size="lg" className="w-full h-14 text-lg font-bold">
-          Confirm Payment
-        </Button>
+        <Link href={`/booking-successful?price=${paymentAmount}`} className="w-full">
+            <Button size="lg" className="w-full h-14 text-lg font-bold">
+            Confirm Payment
+            </Button>
+        </Link>
       </footer>
     </div>
   );

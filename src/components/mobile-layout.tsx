@@ -1,6 +1,12 @@
+'use client';
+
 import { BottomNav } from './bottom-nav';
+import { usePathname } from 'next/navigation';
 
 export function MobileLayout({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname();
+  const showBottomNav = !pathname.startsWith('/booking-successful');
+
   return (
     <main className="flex justify-center items-center min-h-svh">
       <div className="relative w-full max-w-sm h-[844px] bg-background shadow-2xl rounded-[40px] overflow-hidden border-[10px] border-black dark:border-gray-800">
@@ -9,7 +15,7 @@ export function MobileLayout({ children }: { children: React.ReactNode }) {
           <div className="flex-1 overflow-hidden">
             {children}
           </div>
-          <BottomNav />
+          {showBottomNav && <BottomNav />}
         </div>
       </div>
     </main>

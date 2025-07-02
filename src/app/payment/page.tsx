@@ -1,5 +1,6 @@
 'use client';
 
+import { useSearchParams } from 'next/navigation';
 import { ArrowLeft, CreditCard, Banknote, Landmark } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -8,12 +9,14 @@ import { Label } from '@/components/ui/label';
 import Link from 'next/link';
 
 export default function PaymentPage() {
-  const paymentAmount = 40000;
+  const searchParams = useSearchParams();
+  const priceParam = searchParams.get('price');
+  const paymentAmount = priceParam ? parseInt(priceParam, 10) : 0;
 
   return (
     <div className="flex flex-col h-full bg-muted/30">
       <header className="p-4 flex items-center gap-4 border-b bg-background sticky top-0 z-20">
-        <Link href="/bus-live-location">
+        <Link href={`/bus-live-location?price=${paymentAmount}`}>
           <Button variant="ghost" size="icon">
             <ArrowLeft className="h-6 w-6" />
           </Button>

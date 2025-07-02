@@ -129,7 +129,7 @@ export default function BookSeatPage() {
             <span className="text-2xl font-bold text-primary">₦{totalPrice.toLocaleString()}</span>
           </div>
         )}
-        <Link href="/bus-live-location" className="w-full">
+        <Link href={`/bus-live-location?price=${totalPrice}`} className="w-full">
           <Button size="lg" className="w-full h-14 text-lg font-bold">
             Find a bus
           </Button>

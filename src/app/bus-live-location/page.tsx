@@ -1,5 +1,6 @@
 'use client';
 
+import { useSearchParams } from 'next/navigation';
 import { ArrowLeft, Bus, Phone } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
@@ -9,6 +10,10 @@ import { stops } from '@/lib/data';
 import Link from 'next/link';
 
 export default function BusLiveLocationPage() {
+  const searchParams = useSearchParams();
+  const priceParam = searchParams.get('price');
+  const price = priceParam ? parseInt(priceParam, 10) : 0;
+
   const currentTrip = {
     busNumber: 'CH-IK-01',
     operator: 'Chibuz Bus',
@@ -69,7 +74,13 @@ export default function BusLiveLocationPage() {
       </main>
       
       <footer className="p-4 border-t bg-background sticky bottom-0 z-10">
-        <Link href="/payment" className="w-full">
+        {price > 0 && (
+          <div className="flex justify-between items-center mb-4">
+            <span className="text-lg font-medium text-muted-foreground">Total Payment</span>
+            <span className="text-2xl font-bold text-primary">₦{price.toLocaleString()}</span>
+          </div>
+        )}
+        <Link href={`/payment?price=${price}`} className="w-full">
           <Button size="lg" className="w-full h-14 text-lg font-bold">
               Make Payment
           </Button>

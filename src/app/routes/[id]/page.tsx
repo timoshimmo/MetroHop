@@ -1,4 +1,4 @@
-import { ArrowLeft, ArrowRight, Bus, Clock, DollarSign } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Banknote, Bus, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
@@ -69,7 +69,7 @@ export default function RouteDetailsPage({ params }: { params: { id: string } })
                     </div>
                 </div>
                  <div className="flex items-center gap-2">
-                    <DollarSign className="h-5 w-5 text-muted-foreground" />
+                    <Banknote className="h-5 w-5 text-muted-foreground" />
                     <div>
                         <p className="text-muted-foreground">Price</p>
                         <p className="font-bold text-primary text-base">₦{route.price.toLocaleString()}</p>

@@ -5,8 +5,8 @@ import { usePathname } from 'next/navigation';
 
 export function MobileLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const noNavRoutes = ['/', '/signup', '/booking-successful'];
-  const showBottomNav = !noNavRoutes.includes(pathname);
+  const noNavRoutes = ['/', '/booking-successful'];
+  const showBottomNav = !noNavRoutes.includes(pathname) && !pathname.startsWith('/signup');
 
   return (
     <main className="flex justify-center items-center min-h-svh">

@@ -23,11 +23,11 @@ export default function Home() {
         <Card className="overflow-hidden shadow-lg">
           <Image
             src="https://placehold.co/600x300.png"
-            alt="Bus promotional banner"
+            alt="Promotional banner showing a bus in Lagos"
             width={600}
             height={300}
             className="w-full object-cover"
-            data-ai-hint="bus modern city"
+            data-ai-hint="bus lagos"
           />
         </Card>
 

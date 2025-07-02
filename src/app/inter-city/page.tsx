@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Search, ArrowLeft } from 'lucide-react';
-import { allRoutes } from '@/lib/data';
+import { localRoutes } from '@/lib/data';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { RouteCard } from '@/components/route-card';
@@ -11,11 +11,11 @@ import { RouteCard } from '@/components/route-card';
 export default function InterCityRoutesPage() {
   const [searchQuery, setSearchQuery] = useState('');
 
-  const interCityRoutes = allRoutes.filter(route => route.category === 'Intercity');
+  const routes = localRoutes;
 
   const lowercasedQuery = searchQuery.toLowerCase();
 
-  const filteredRoutes = interCityRoutes.filter(
+  const filteredRoutes = routes.filter(
     (route) =>
       route.name.toLowerCase().includes(lowercasedQuery) ||
       route.from.toLowerCase().includes(lowercasedQuery) ||
@@ -30,14 +30,14 @@ export default function InterCityRoutesPage() {
             <ArrowLeft className="h-6 w-6" />
           </Button>
         </Link>
-        <h1 className="text-xl font-bold font-headline">Inter-city Routes</h1>
+        <h1 className="text-xl font-bold font-headline">Lekki & Ajah Routes</h1>
       </header>
 
       <main className="flex-1 overflow-y-auto p-4 space-y-4">
         <div className="relative">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
           <Input
-            placeholder="Search for a city or route"
+            placeholder="Search for a local route"
             className="pl-10 h-12 text-base bg-card"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}

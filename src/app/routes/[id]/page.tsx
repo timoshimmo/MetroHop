@@ -2,12 +2,13 @@ import { ArrowLeft, ArrowRight, Banknote, Bus, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
-import { allRoutes, stops } from '@/lib/data';
+import { allRoutes, localRoutes, stops } from '@/lib/data';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
 export default function RouteDetailsPage({ params }: { params: { id: string } }) {
-  const route = allRoutes.find((r) => r.id === params.id);
+  const combinedRoutes = [...allRoutes, ...localRoutes];
+  const route = combinedRoutes.find((r) => r.id === params.id);
 
   if (!route) {
     notFound();
@@ -18,7 +19,7 @@ export default function RouteDetailsPage({ params }: { params: { id: string } })
   return (
     <div className="flex flex-col h-full bg-muted/30">
       <header className="p-4 flex items-center gap-4 border-b bg-background sticky top-0 z-10">
-        <Link href="/routes">
+        <Link href={route.category === 'Local' ? '/inter-city' : '/routes'}>
           <Button variant="ghost" size="icon">
             <ArrowLeft className="h-6 w-6" />
           </Button>

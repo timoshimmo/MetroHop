@@ -1,6 +1,6 @@
 import type { Trip, Location, Stop, Promo, City } from './types';
 
-export const recentTrips: Trip[] = [
+export const localRoutes: Trip[] = [
   {
     id: '1',
     name: 'Lekki-Ajah Express',
@@ -23,10 +23,6 @@ export const recentTrips: Trip[] = [
     busNumber: 'LK-CH-02',
     category: 'Local'
   },
-];
-
-export const allRoutes: Trip[] = [
-    ...recentTrips,
     {
     id: '3',
     name: 'Ikate Connector',
@@ -60,6 +56,10 @@ export const allRoutes: Trip[] = [
     busNumber: 'VGC-CH-05',
     category: 'Local'
   },
+];
+
+
+export const allRoutes: Trip[] = [
   {
     id: 'inter1',
     name: 'Lagos-Abuja Express',

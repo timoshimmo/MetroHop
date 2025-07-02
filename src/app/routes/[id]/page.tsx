@@ -1,3 +1,5 @@
+'use client';
+
 import { ArrowLeft, ArrowRight, Banknote, Bus, Clock, MapPin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -5,7 +7,6 @@ import { Separator } from '@/components/ui/separator';
 import { allRoutes, localRoutes, stops } from '@/lib/data';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import Image from 'next/image';
 
 export default function RouteDetailsPage({ params }: { params: { id: string } }) {
   const combinedRoutes = [...allRoutes, ...localRoutes];
@@ -29,6 +30,30 @@ export default function RouteDetailsPage({ params }: { params: { id: string } })
       </header>
 
       <main className="flex-1 overflow-y-auto p-4 space-y-6">
+        <div className="relative w-full h-64 rounded-lg overflow-hidden border">
+          {routeStops.length > 0 ? (
+            <>
+              <div className="absolute inset-0 bg-muted" />
+              {routeStops.map((stop) => (
+                <div
+                  key={stop.id}
+                  className="absolute group"
+                  style={{ top: `${stop.lat}%`, left: `${stop.lng}%`, transform: 'translate(-50%, -100%)' }}
+                >
+                  <MapPin className="h-8 w-8 text-primary fill-primary/30" />
+                  <div className="absolute bottom-full mb-2 w-max p-2 text-xs bg-background rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap -translate-x-1/2 left-1/2">
+                    {stop.name}
+                  </div>
+                </div>
+              ))}
+            </>
+          ) : (
+            <div className="w-full h-full flex items-center justify-center bg-muted">
+              <p className='text-muted-foreground text-sm'>No bus stops listed for this route.</p>
+            </div>
+          )}
+        </div>
+
         <Card className="shadow-md">
           <CardHeader>
             <CardTitle>Route Information</CardTitle>
@@ -79,33 +104,6 @@ export default function RouteDetailsPage({ params }: { params: { id: string } })
                 </div>
             </div>
           </CardContent>
-        </Card>
-
-        <Card className="shadow-md">
-            <CardHeader>
-                <CardTitle>Bus Stops</CardTitle>
-            </CardHeader>
-            <CardContent>
-                {routeStops.length > 0 ? (
-                    <div className="relative w-full h-64 rounded-lg overflow-hidden border">
-                        <div className="absolute inset-0 bg-muted" />
-                        {routeStops.map((stop) => (
-                            <div
-                                key={stop.id}
-                                className="absolute group"
-                                style={{ top: `${stop.lat}%`, left: `${stop.lng}%`, transform: 'translate(-50%, -100%)' }}
-                            >
-                                <MapPin className="h-8 w-8 text-primary fill-primary/30" />
-                                <div className="absolute bottom-full mb-2 w-max p-2 text-xs bg-background rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap -translate-x-1/2 left-1/2">
-                                    {stop.name}
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                ) : (
-                    <p className='text-muted-foreground text-sm'>No bus stops listed for this route.</p>
-                )}
-            </CardContent>
         </Card>
       </main>
       

@@ -8,7 +8,7 @@ export const recentTrips: Trip[] = [
     to: 'Ajah Bus Stop',
     departureTime: '08:00 AM',
     arrivalTime: '08:45 AM',
-    price: 4.50,
+    price: 500,
     busNumber: 'LK-AJ-01',
   },
   {
@@ -18,7 +18,7 @@ export const recentTrips: Trip[] = [
     to: 'Lekki Phase 1',
     departureTime: '09:15 AM',
     arrivalTime: '09:45 AM',
-    price: 2.00,
+    price: 300,
     busNumber: 'LK-CH-02',
   },
 ];
@@ -32,7 +32,7 @@ export const allRoutes: Trip[] = [
     to: 'VGC',
     departureTime: '11:00 AM',
     arrivalTime: '11:30 AM',
-    price: 2.75,
+    price: 350,
     busNumber: 'IK-VGC-03',
   },
   {
@@ -42,7 +42,7 @@ export const allRoutes: Trip[] = [
     to: 'Lekki Phase 1',
     departureTime: '12:30 PM',
     arrivalTime: '01:15 PM',
-    price: 4.50,
+    price: 500,
     busNumber: 'AJ-LK-04',
   },
    {
@@ -52,7 +52,7 @@ export const allRoutes: Trip[] = [
     to: 'Chevron Drive',
     departureTime: '02:00 PM',
     arrivalTime: '02:20 PM',
-    price: 1.50,
+    price: 200,
     busNumber: 'VGC-CH-05',
   },
 ];
@@ -65,7 +65,7 @@ export const historyTrips: Trip[] = [
     to: 'Lekki Phase 1',
     departureTime: 'Yesterday',
     arrivalTime: '08:00 AM',
-    price: 4.50,
+    price: 500,
     busNumber: 'AJ-LK-04',
     status: 'Completed',
   },
@@ -76,7 +76,7 @@ export const historyTrips: Trip[] = [
     to: 'VGC',
     departureTime: '2 days ago',
     arrivalTime: '06:00 PM',
-    price: 2.75,
+    price: 350,
     busNumber: 'IK-VGC-03',
     status: 'Completed',
   },

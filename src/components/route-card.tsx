@@ -45,7 +45,7 @@ export function RouteCard({ trip, showStatus = false }: RouteCardProps) {
         </div>
       </CardContent>
       <CardFooter className="bg-muted/50 p-4 flex justify-between items-center">
-        <p className="font-bold text-lg text-primary">${trip.price.toFixed(2)}</p>
+        <p className="font-bold text-lg text-primary">₦{trip.price}</p>
         <Button size="sm">
           View Details
           <ArrowRight className="ml-2 h-4 w-4" />

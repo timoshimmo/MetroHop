@@ -28,7 +28,7 @@ export default function RoutesPage() {
             <ArrowLeft className="h-6 w-6" />
           </Button>
         </Link>
-        <h1 className="text-xl font-bold font-headline">Routes Between Cities</h1>
+        <h1 className="text-xl font-bold font-headline">Intra-City Routes</h1>
       </header>
 
       <main className="flex-1 overflow-y-auto p-4 space-y-4">

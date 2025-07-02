@@ -181,11 +181,11 @@ export const locations: Location[] = [
 ];
 
 export const stops: Stop[] = [
-    { id: 'stop1', name: 'Lekki Phase 1 Gate', routes: ['LK-AJ-01', 'LK-CH-02', 'AJ-LK-04'] },
-    { id: 'stop2', name: 'Ikate Junction', routes: ['LK-AJ-01', 'IK-VGC-03'] },
-    { id: 'stop3', name: 'Chevron Bus Stop', routes: ['LK-AJ-01', 'LK-CH-02', 'VGC-CH-05'] },
-    { id: 'stop4', name: 'VGC Gate', routes: ['IK-VGC-03', 'VGC-CH-05'] },
-    { id: 'stop5', name: 'Ajah Terminus', routes: ['LK-AJ-01', 'AJ-LK-04'] },
+    { id: 'stop1', name: 'Lekki Phase 1 Gate', routes: ['LK-AJ-01', 'LK-CH-02', 'AJ-LK-04'], lat: 20, lng: 15 },
+    { id: 'stop2', name: 'Ikate Junction', routes: ['LK-AJ-01', 'IK-VGC-03'], lat: 35, lng: 40 },
+    { id: 'stop3', name: 'Chevron Bus Stop', routes: ['LK-AJ-01', 'LK-CH-02', 'VGC-CH-05'], lat: 55, lng: 60 },
+    { id: 'stop4', name: 'VGC Gate', routes: ['IK-VGC-03', 'VGC-CH-05'], lat: 70, lng: 75 },
+    { id: 'stop5', name: 'Ajah Terminus', routes: ['LK-AJ-01', 'AJ-LK-04'], lat: 85, lng: 90 },
 ];
 
 export const promos: Promo[] = [

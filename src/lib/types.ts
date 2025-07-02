@@ -21,6 +21,8 @@ export interface Stop {
   id: string;
   name: string;
   routes: string[];
+  lat?: number;
+  lng?: number;
 }
 
 export interface Promo {

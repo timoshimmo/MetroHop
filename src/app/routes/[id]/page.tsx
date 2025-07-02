@@ -1,10 +1,11 @@
-import { ArrowLeft, ArrowRight, Banknote, Bus, Clock } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Banknote, Bus, Clock, MapPin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { allRoutes, localRoutes, stops } from '@/lib/data';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import Image from 'next/image';
 
 export default function RouteDetailsPage({ params }: { params: { id: string } }) {
   const combinedRoutes = [...allRoutes, ...localRoutes];
@@ -85,20 +86,31 @@ export default function RouteDetailsPage({ params }: { params: { id: string } })
                 <CardTitle>Bus Stops</CardTitle>
             </CardHeader>
             <CardContent>
-                <ul className="space-y-0">
-                    {routeStops.map((stop, index) => (
-                        <li key={stop.id} className="flex">
-                            <div className="flex flex-col items-center mr-4">
-                                <div className="w-5 h-5 rounded-full border-2 border-primary flex items-center justify-center">
-                                    <div className='w-2 h-2 rounded-full bg-primary'></div>
+                {routeStops.length > 0 ? (
+                    <div className="relative w-full h-64 rounded-lg overflow-hidden border">
+                        <Image
+                            src="https://placehold.co/600x400.png"
+                            alt="Map of bus stops"
+                            fill
+                            className="object-cover"
+                            data-ai-hint="city map"
+                        />
+                        {routeStops.map((stop) => (
+                            <div
+                                key={stop.id}
+                                className="absolute group"
+                                style={{ top: `${stop.lat}%`, left: `${stop.lng}%`, transform: 'translate(-50%, -100%)' }}
+                            >
+                                <MapPin className="h-8 w-8 text-primary fill-primary/30" />
+                                <div className="absolute bottom-full mb-2 w-max p-2 text-xs bg-background rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap -translate-x-1/2 left-1/2">
+                                    {stop.name}
                                 </div>
-                                {index < routeStops.length - 1 && <div className="w-0.5 flex-1 bg-border my-1 min-h-[2rem]"></div>}
                             </div>
-                            <span className="font-medium -mt-1 pb-6">{stop.name}</span>
-                        </li>
-                    ))}
-                    {routeStops.length === 0 && <p className='text-muted-foreground text-sm'>No bus stops listed for this route.</p>}
-                </ul>
+                        ))}
+                    </div>
+                ) : (
+                    <p className='text-muted-foreground text-sm'>No bus stops listed for this route.</p>
+                )}
             </CardContent>
         </Card>
       </main>

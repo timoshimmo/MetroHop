@@ -68,7 +68,7 @@ export default function Home() {
         </Card>
         
         <div className="grid grid-cols-2 gap-4">
-          <Link href="/book-seat">
+          <Link href="/routes">
             <Card className="shadow-md hover:bg-primary/10 transition-colors cursor-pointer">
               <CardContent className="p-4 flex flex-col items-center justify-center gap-2 text-center h-32">
                 <Globe className="h-8 w-8 text-primary" />
@@ -76,7 +76,7 @@ export default function Home() {
               </CardContent>
             </Card>
           </Link>
-          <Link href="/book-seat">
+          <Link href="/routes">
             <Card className="shadow-md hover:bg-primary/10 transition-colors cursor-pointer">
               <CardContent className="p-4 flex flex-col items-center justify-center gap-2 text-center h-32">
                 <Bus className="h-8 w-8 text-primary" />

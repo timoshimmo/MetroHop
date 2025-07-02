@@ -29,31 +29,28 @@ export default function RouteDetailsPage({ params }: { params: { id: string } })
         <h1 className="text-xl font-bold font-headline truncate">{route.name}</h1>
       </header>
 
-      <main className="flex-1 overflow-y-auto p-4 space-y-6">
-        <div className="relative w-full h-64 rounded-lg overflow-hidden border">
-          {routeStops.length > 0 ? (
-            <>
-              <div className="absolute inset-0 bg-muted" />
-              {routeStops.map((stop) => (
-                <div
-                  key={stop.id}
-                  className="absolute group"
-                  style={{ top: `${stop.lat}%`, left: `${stop.lng}%`, transform: 'translate(-50%, -100%)' }}
-                >
-                  <MapPin className="h-8 w-8 text-primary fill-primary/30" />
-                  <div className="absolute bottom-full mb-2 w-max p-2 text-xs bg-background rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap -translate-x-1/2 left-1/2">
-                    {stop.name}
-                  </div>
-                </div>
-              ))}
-            </>
-          ) : (
-            <div className="w-full h-full flex items-center justify-center bg-muted">
-              <p className='text-muted-foreground text-sm'>No bus stops listed for this route.</p>
+      <div className="relative w-full h-64 bg-muted">
+        {routeStops.length > 0 ? (
+          routeStops.map((stop) => (
+            <div
+              key={stop.id}
+              className="absolute group"
+              style={{ top: `${stop.lat}%`, left: `${stop.lng}%`, transform: 'translate(-50%, -100%)' }}
+            >
+              <MapPin className="h-8 w-8 text-primary fill-primary/30" />
+              <div className="absolute bottom-full mb-2 w-max p-2 text-xs bg-background rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap -translate-x-1/2 left-1/2">
+                {stop.name}
+              </div>
             </div>
-          )}
-        </div>
-
+          ))
+        ) : (
+          <div className="w-full h-full flex items-center justify-center">
+            <p className="text-muted-foreground text-sm">No bus stops listed for this route.</p>
+          </div>
+        )}
+      </div>
+        
+      <main className="flex-1 overflow-y-auto p-4 space-y-6">
         <Card className="shadow-md">
           <CardHeader>
             <CardTitle>Route Information</CardTitle>

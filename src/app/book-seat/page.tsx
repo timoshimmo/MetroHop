@@ -33,7 +33,7 @@ export default function BookSeatPage() {
         <h1 className="text-xl font-bold font-headline">Book a seat</h1>
       </header>
 
-      <div className="relative w-full h-64 bg-muted">
+      <div className="relative w-full h-1/2 bg-muted">
         <Map stops={stops.slice(0, 2)} />
       </div>
 

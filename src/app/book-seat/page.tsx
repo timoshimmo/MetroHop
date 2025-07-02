@@ -1,15 +1,21 @@
 'use client';
 
 import { useState } from 'react';
-import { ArrowLeft, ArrowRightLeft, MapPin, Minus, Plus } from 'lucide-react';
+import { ArrowLeft, Minus, Plus, CalendarDays, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
 import { Calendar } from '@/components/ui/calendar';
 import Link from 'next/link';
+import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Map } from '@/components/map';
+import { stops } from '@/lib/data';
+import { format } from 'date-fns';
+import { cn } from '@/lib/utils';
 
 export default function BookSeatPage() {
   const [date, setDate] = useState<Date | undefined>(new Date());
+  const [time, setTime] = useState<string | undefined>('09:00 AM');
   const [passengers, setPassengers] = useState(1);
 
   const handlePassengerChange = (amount: number) => {
@@ -27,39 +33,65 @@ export default function BookSeatPage() {
         <h1 className="text-xl font-bold font-headline">Book a seat</h1>
       </header>
 
+      <div className="relative w-full h-48 bg-muted">
+        <Map stops={stops.slice(0, 2)} />
+      </div>
+
       <main className="flex-1 overflow-y-auto p-4">
         <div className="space-y-6">
           <Card className="shadow-md">
             <CardContent className="p-4">
-              <div className="relative">
-                <div className="space-y-2">
-                  <div className="relative">
-                    <label className="absolute left-10 -top-2.5 bg-card px-1 text-xs text-muted-foreground z-10">From</label>
-                    <MapPin className="absolute left-3.5 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-                    <Input defaultValue="Ikeja" className="pl-10 h-14 text-base" />
-                  </div>
-                  <div className="relative">
-                    <label className="absolute left-10 -top-2.5 bg-card px-1 text-xs text-muted-foreground z-10">To</label>
-                    <MapPin className="absolute left-3.5 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-                    <Input defaultValue="Lekki" className="pl-10 h-14 text-base" />
-                  </div>
-                </div>
-                <Button variant="outline" size="icon" className="absolute top-1/2 -translate-y-1/2 right-4 rounded-full bg-background border-2 hover:bg-muted z-10">
-                  <ArrowRightLeft className="h-5 w-5" />
-                </Button>
+              <div className="grid grid-cols-2 gap-4">
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant={"outline"}
+                      className={cn(
+                        "w-full justify-start text-left font-normal h-14",
+                        !date && "text-muted-foreground"
+                      )}
+                    >
+                      <CalendarDays className="mr-2 h-4 w-4" />
+                      <div>
+                        <p className="text-xs text-muted-foreground">Date</p>
+                        {date ? (
+                          <span className="font-semibold">{format(date, "PPP")}</span>
+                        ) : (
+                          <span>Pick a date</span>
+                        )}
+                      </div>
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0">
+                    <Calendar
+                      mode="single"
+                      selected={date}
+                      onSelect={setDate}
+                      initialFocus
+                    />
+                  </PopoverContent>
+                </Popover>
+                
+                <Select onValueChange={setTime} defaultValue={time}>
+                    <SelectTrigger className="w-full h-14 justify-start font-normal">
+                         <div className="flex items-center text-left">
+                            <Clock className="mr-2 h-4 w-4" />
+                            <div>
+                                <p className="text-xs text-muted-foreground">Time</p>
+                                <SelectValue placeholder="Select time" />
+                            </div>
+                        </div>
+                    </SelectTrigger>
+                    <SelectContent>
+                        <SelectItem value="09:00 AM">09:00 AM</SelectItem>
+                        <SelectItem value="10:00 AM">10:00 AM</SelectItem>
+                        <SelectItem value="11:00 AM">11:00 AM</SelectItem>
+                        <SelectItem value="12:00 PM">12:00 PM</SelectItem>
+                        <SelectItem value="01:00 PM">01:00 PM</SelectItem>
+                        <SelectItem value="02:00 PM">02:00 PM</SelectItem>
+                    </SelectContent>
+                </Select>
               </div>
-            </CardContent>
-          </Card>
-
-          <Card className="shadow-md">
-            <CardContent className="p-4">
-                <h3 className="font-semibold mb-3 text-base">Departure Date</h3>
-                <Calendar
-                    mode="single"
-                    selected={date}
-                    onSelect={setDate}
-                    className="rounded-md border p-0"
-                />
             </CardContent>
           </Card>
           

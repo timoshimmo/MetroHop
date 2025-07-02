@@ -88,13 +88,7 @@ export default function RouteDetailsPage({ params }: { params: { id: string } })
             <CardContent>
                 {routeStops.length > 0 ? (
                     <div className="relative w-full h-64 rounded-lg overflow-hidden border">
-                        <Image
-                            src="https://placehold.co/600x400.png"
-                            alt="Map of bus stops"
-                            fill
-                            className="object-cover"
-                            data-ai-hint="city map"
-                        />
+                        <div className="absolute inset-0 bg-muted" />
                         {routeStops.map((stop) => (
                             <div
                                 key={stop.id}

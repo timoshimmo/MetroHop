@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Search, MapPin, Bus, ArrowLeft } from 'lucide-react';
@@ -10,6 +11,26 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 
 export default function RoutesPage() {
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const lowercasedQuery = searchQuery.toLowerCase();
+
+  const filteredRoutes = allRoutes.filter(trip =>
+    trip.name.toLowerCase().includes(lowercasedQuery) ||
+    trip.from.toLowerCase().includes(lowercasedQuery) ||
+    trip.to.toLowerCase().includes(lowercasedQuery)
+  );
+
+  const filteredLocations = locations.filter(location =>
+    location.name.toLowerCase().includes(lowercasedQuery) ||
+    location.address.toLowerCase().includes(lowercasedQuery)
+  );
+
+  const filteredStops = stops.filter(stop =>
+    stop.name.toLowerCase().includes(lowercasedQuery) ||
+    stop.routes.some(route => route.toLowerCase().includes(lowercasedQuery))
+  );
+
   return (
     <div className="flex flex-col h-full bg-muted/30">
       <header className="p-4 flex items-center gap-4 border-b bg-background sticky top-0 z-10">
@@ -24,7 +45,12 @@ export default function RoutesPage() {
       <main className="flex-1 overflow-y-auto p-4">
         <div className="relative mb-4">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-            <Input placeholder="Where to?" className="pl-10 h-12 text-base bg-card" />
+            <Input
+              placeholder="Where to?"
+              className="pl-10 h-12 text-base bg-card"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
         </div>
 
         <Tabs defaultValue="routes">
@@ -35,14 +61,14 @@ export default function RoutesPage() {
             </TabsList>
             <TabsContent value="routes">
               <div className="space-y-4">
-                {allRoutes.map((trip) => (
+                {filteredRoutes.map((trip) => (
                   <RouteCard key={trip.id} trip={trip} />
                 ))}
               </div>
             </TabsContent>
             <TabsContent value="locations">
               <div className="space-y-3">
-                {locations.map((location) => (
+                {filteredLocations.map((location) => (
                   <Card key={location.id} className="hover:bg-muted/50 transition-colors">
                     <CardContent className="p-4 flex items-center gap-4">
                       <div className="p-3 bg-primary/10 rounded-lg">
@@ -59,7 +85,7 @@ export default function RoutesPage() {
             </TabsContent>
             <TabsContent value="stops">
               <div className="space-y-3">
-                 {stops.map((stop) => (
+                 {filteredStops.map((stop) => (
                   <Card key={stop.id} className="hover:bg-muted/50 transition-colors">
                     <CardContent className="p-4 flex items-center gap-4">
                       <div className="p-3 bg-primary/10 rounded-lg">

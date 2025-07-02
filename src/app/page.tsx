@@ -22,12 +22,12 @@ export default function Home() {
       <main className="flex-1 overflow-y-auto p-4 space-y-6">
         <Card className="overflow-hidden shadow-lg">
           <Image
-            src="https://placehold.co/600x300.png"
-            alt="Promotional banner showing a bus in Lagos"
+            src="https://images.unsplash.com/photo-1596224233213-4410a5015b63"
+            alt="Promotional banner showing a yellow bus in Lagos, Nigeria"
             width={600}
             height={300}
             className="w-full object-cover"
-            data-ai-hint="bus lagos"
+            priority
           />
         </Card>
 

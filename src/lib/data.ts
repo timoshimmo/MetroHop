@@ -60,6 +60,50 @@ export const allRoutes: Trip[] = [
     busNumber: 'VGC-CH-05',
     category: 'Local'
   },
+  {
+    id: 'inter1',
+    name: 'Lagos-Abuja Express',
+    from: 'Lagos',
+    to: 'Abuja',
+    departureTime: '06:00 AM',
+    arrivalTime: '06:00 PM',
+    price: 15000,
+    busNumber: 'LA-ABJ-01',
+    category: 'Intercity'
+  },
+  {
+    id: 'inter2',
+    name: 'PH-Enugu Connector',
+    from: 'Port Harcourt',
+    to: 'Enugu',
+    departureTime: '08:00 AM',
+    arrivalTime: '12:00 PM',
+    price: 8000,
+    busNumber: 'PH-EN-01',
+    category: 'Intercity'
+  },
+  {
+    id: 'inter3',
+    name: 'Kano-Kaduna Shuttle',
+    from: 'Kano',
+    to: 'Kaduna',
+    departureTime: '09:00 AM',
+    arrivalTime: '12:00 PM',
+    price: 5000,
+    busNumber: 'KN-KD-01',
+    category: 'Intercity'
+  },
+  {
+    id: 'inter4',
+    name: 'Ibadan-Lagos Runner',
+    from: 'Ibadan',
+    to: 'Lagos',
+    departureTime: '10:00 AM',
+    arrivalTime: '01:00 PM',
+    price: 4500,
+    busNumber: 'IB-LA-01',
+    category: 'Intercity'
+  },
 ];
 
 export const historyTrips: Trip[] = [

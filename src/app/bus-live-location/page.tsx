@@ -69,9 +69,11 @@ export default function BusLiveLocationPage() {
       </main>
       
       <footer className="p-4 border-t bg-background sticky bottom-0 z-10">
-        <Button size="lg" className="w-full h-14 text-lg font-bold">
-            Make Payment
-        </Button>
+        <Link href="/payment" className="w-full">
+          <Button size="lg" className="w-full h-14 text-lg font-bold">
+              Make Payment
+          </Button>
+        </Link>
       </footer>
     </div>
   );

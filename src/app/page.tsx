@@ -6,7 +6,7 @@ import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Settings, Plus, Star, History, Clock, Calendar, ArrowRight, Bus } from 'lucide-react';
+import { Settings, Plus, Star, History, Clock, Calendar, ArrowRight, Bus, Globe } from 'lucide-react';
 import { TicketCard } from '@/components/ticket-card';
 import { myTickets, promos } from '@/lib/data';
 import React, { useState, useEffect } from 'react';
@@ -68,16 +68,16 @@ export default function Home() {
         </Card>
         
         <div className="grid grid-cols-2 gap-4">
-          <Card className="shadow-md hover:bg-muted/50 transition-colors cursor-pointer">
-            <CardContent className="p-4 flex flex-col items-center justify-center gap-2">
-              <Image src="https://placehold.co/120x60.png" width={120} height={60} alt="Intercity bus" data-ai-hint="bus isometric" />
-              <p className="font-semibold">Intercity</p>
+          <Card className="shadow-md hover:bg-primary/10 transition-colors cursor-pointer">
+            <CardContent className="p-4 flex flex-col items-center justify-center gap-2 text-center h-32">
+              <Globe className="h-8 w-8 text-primary" />
+              <p className="font-semibold">Inter-city</p>
             </CardContent>
           </Card>
-          <Card className="shadow-md hover:bg-muted/50 transition-colors cursor-pointer">
-            <CardContent className="p-4 flex flex-col items-center justify-center gap-2">
-              <Image src="https://placehold.co/120x60.png" width={120} height={60} alt="Local bus" data-ai-hint="bus isometric" />
-              <p className="font-semibold">Local Trans</p>
+          <Card className="shadow-md hover:bg-primary/10 transition-colors cursor-pointer">
+            <CardContent className="p-4 flex flex-col items-center justify-center gap-2 text-center h-32">
+              <Bus className="h-8 w-8 text-primary" />
+              <p className="font-semibold">Intra-city</p>
             </CardContent>
           </Card>
         </div>

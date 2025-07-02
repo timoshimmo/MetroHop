@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { ArrowLeft, Minus, Plus, CalendarDays, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -14,6 +15,10 @@ import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
 
 export default function BookSeatPage() {
+  const searchParams = useSearchParams();
+  const priceParam = searchParams.get('price');
+  const basePrice = priceParam ? parseInt(priceParam, 10) : 0;
+
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [time, setTime] = useState<string | undefined>('09:00 AM');
   const [passengers, setPassengers] = useState(1);
@@ -21,6 +26,8 @@ export default function BookSeatPage() {
   const handlePassengerChange = (amount: number) => {
     setPassengers((prev) => Math.max(1, prev + amount));
   };
+
+  const totalPrice = basePrice * passengers;
 
   return (
     <div className="flex flex-col h-full bg-muted/30">
@@ -116,6 +123,12 @@ export default function BookSeatPage() {
       </main>
       
       <footer className="p-4 border-t bg-background sticky bottom-0 z-10">
+        {basePrice > 0 && (
+          <div className="flex justify-between items-center mb-4">
+            <span className="text-lg font-medium text-muted-foreground">Total Payment</span>
+            <span className="text-2xl font-bold text-primary">₦{totalPrice.toLocaleString()}</span>
+          </div>
+        )}
         <Link href="/bus-live-location" className="w-full">
           <Button size="lg" className="w-full h-14 text-lg font-bold">
             Find a bus

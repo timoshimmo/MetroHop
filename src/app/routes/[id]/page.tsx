@@ -95,7 +95,7 @@ export default function RouteDetailsPage({ params }: { params: { id: string } })
       </main>
       
       <footer className="p-4 border-t bg-background sticky bottom-0 z-10">
-        <Link href="/book-seat" className='w-full'>
+        <Link href={`/book-seat?price=${route.price}`} className='w-full'>
           <Button size="lg" className="w-full h-14 text-lg font-bold">
             Book Now
           </Button>

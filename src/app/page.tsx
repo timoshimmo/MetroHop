@@ -68,18 +68,22 @@ export default function Home() {
         </Card>
         
         <div className="grid grid-cols-2 gap-4">
-          <Card className="shadow-md hover:bg-primary/10 transition-colors cursor-pointer">
-            <CardContent className="p-4 flex flex-col items-center justify-center gap-2 text-center h-32">
-              <Globe className="h-8 w-8 text-primary" />
-              <p className="font-semibold">Inter-city</p>
-            </CardContent>
-          </Card>
-          <Card className="shadow-md hover:bg-primary/10 transition-colors cursor-pointer">
-            <CardContent className="p-4 flex flex-col items-center justify-center gap-2 text-center h-32">
-              <Bus className="h-8 w-8 text-primary" />
-              <p className="font-semibold">Intra-city</p>
-            </CardContent>
-          </Card>
+          <Link href="/book-seat">
+            <Card className="shadow-md hover:bg-primary/10 transition-colors cursor-pointer">
+              <CardContent className="p-4 flex flex-col items-center justify-center gap-2 text-center h-32">
+                <Globe className="h-8 w-8 text-primary" />
+                <p className="font-semibold">Inter-city</p>
+              </CardContent>
+            </Card>
+          </Link>
+          <Link href="/book-seat">
+            <Card className="shadow-md hover:bg-primary/10 transition-colors cursor-pointer">
+              <CardContent className="p-4 flex flex-col items-center justify-center gap-2 text-center h-32">
+                <Bus className="h-8 w-8 text-primary" />
+                <p className="font-semibold">Intra-city</p>
+              </CardContent>
+            </Card>
+          </Link>
         </div>
 
         <Card className="bg-red-50 border-red-200 shadow-md">

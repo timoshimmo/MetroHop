@@ -1,4 +1,4 @@
-import type { Trip, Location, Stop } from './types';
+import type { Trip, Location, Stop, Promo } from './types';
 
 export const recentTrips: Trip[] = [
   {
@@ -10,6 +10,7 @@ export const recentTrips: Trip[] = [
     arrivalTime: '08:45 AM',
     price: 500,
     busNumber: 'LK-AJ-01',
+    category: 'Local'
   },
   {
     id: '2',
@@ -20,6 +21,7 @@ export const recentTrips: Trip[] = [
     arrivalTime: '09:45 AM',
     price: 300,
     busNumber: 'LK-CH-02',
+    category: 'Local'
   },
 ];
 
@@ -34,6 +36,7 @@ export const allRoutes: Trip[] = [
     arrivalTime: '11:30 AM',
     price: 350,
     busNumber: 'IK-VGC-03',
+    category: 'Local'
   },
   {
     id: '4',
@@ -44,6 +47,7 @@ export const allRoutes: Trip[] = [
     arrivalTime: '01:15 PM',
     price: 500,
     busNumber: 'AJ-LK-04',
+    category: 'Local'
   },
    {
     id: '5',
@@ -54,6 +58,7 @@ export const allRoutes: Trip[] = [
     arrivalTime: '02:20 PM',
     price: 200,
     busNumber: 'VGC-CH-05',
+    category: 'Local'
   },
 ];
 
@@ -68,6 +73,7 @@ export const historyTrips: Trip[] = [
     price: 500,
     busNumber: 'AJ-LK-04',
     status: 'Completed',
+    category: 'Local'
   },
   {
     id: 'h2',
@@ -79,6 +85,46 @@ export const historyTrips: Trip[] = [
     price: 350,
     busNumber: 'IK-VGC-03',
     status: 'Completed',
+    category: 'Local'
+  },
+];
+
+export const myTickets: Trip[] = [
+  {
+    id: 't1',
+    name: 'Chibuz Bus',
+    from: 'Lekki Phase 1',
+    to: 'Intercity',
+    departureTime: '06:12',
+    arrivalTime: '07:30',
+    price: 2500,
+    busNumber: 'CH-IK-01',
+    status: 'Active',
+    category: 'Intercity'
+  },
+    {
+    id: 't2',
+    name: 'God is Good Motors',
+    from: 'VGC',
+    to: 'Ikeja',
+    departureTime: '10:00',
+    arrivalTime: '11:30',
+    price: 3000,
+    busNumber: 'VGC-IK-02',
+    status: 'Upcoming',
+    category: 'Intercity'
+  },
+  {
+    id: 't3',
+    name: 'BRT Lagos',
+    from: 'CMS',
+    to: 'Ajah',
+    departureTime: '14:30',
+    arrivalTime: '15:45',
+    price: 750,
+    busNumber: 'BRT-05',
+    status: 'Completed',
+    category: 'Local'
   },
 ];
 
@@ -97,3 +143,24 @@ export const stops: Stop[] = [
     { id: 'stop4', name: 'VGC Gate', routes: ['IK-VGC-03', 'VGC-CH-05'] },
     { id: 'stop5', name: 'Ajah Terminus', routes: ['LK-AJ-01', 'AJ-LK-04'] },
 ];
+
+export const promos: Promo[] = [
+  {
+    id: 'p1',
+    title: '75% OFF up to 180k',
+    description: 'Min spend 50k - BCA Credit Card',
+    iconUrl: 'https://placehold.co/40x40.png',
+  },
+  {
+    id: 'p2',
+    title: '50% Cashback',
+    description: 'For your first 3 trips',
+    iconUrl: 'https://placehold.co/40x40.png',
+  },
+    {
+    id: 'p3',
+    title: 'Weekend Bonanza',
+    description: 'Flat ₦1000 off on Saturday',
+    iconUrl: 'https://placehold.co/40x40.png',
+  },
+]

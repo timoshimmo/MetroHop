@@ -14,7 +14,7 @@ export default function ProfilePage() {
   return (
     <div className="flex flex-col h-full bg-muted/30">
       <header className="p-4 border-b bg-background sticky top-0 z-10">
-        <h1 className="text-2xl font-bold font-headline text-center">Profile</h1>
+        <h1 className="text-2xl font-bold font-headline text-center">Account</h1>
       </header>
       
       <main className="flex-1 overflow-y-auto p-4">

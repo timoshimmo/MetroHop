@@ -7,7 +7,8 @@ export interface Trip {
   arrivalTime: string;
   price: number;
   busNumber: string;
-  status?: 'Completed' | 'Upcoming' | 'Ongoing';
+  status?: 'Completed' | 'Upcoming' | 'Ongoing' | 'Active';
+  category?: 'Intercity' | 'Local';
 }
 
 export interface Location {
@@ -20,4 +21,11 @@ export interface Stop {
   id: string;
   name: string;
   routes: string[];
+}
+
+export interface Promo {
+    id: string;
+    title: string;
+    description: string;
+    iconUrl: string;
 }

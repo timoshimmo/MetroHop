@@ -116,9 +116,11 @@ export default function BookSeatPage() {
       </main>
       
       <footer className="p-4 border-t bg-background sticky bottom-0 z-10">
-        <Button size="lg" className="w-full h-14 text-lg font-bold">
-          Find a bus
-        </Button>
+        <Link href="/bus-live-location" className="w-full">
+          <Button size="lg" className="w-full h-14 text-lg font-bold">
+            Find a bus
+          </Button>
+        </Link>
       </footer>
     </div>
   );

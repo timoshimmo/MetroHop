@@ -24,7 +24,7 @@ export default function RoutesPage() {
       <main className="flex-1 overflow-y-auto p-4">
         <div className="relative mb-4">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-            <Input placeholder="Search routes, locations, stops..." className="pl-10 h-12 text-base bg-card" />
+            <Input placeholder="Where to?" className="pl-10 h-12 text-base bg-card" />
         </div>
 
         <Tabs defaultValue="routes">

@@ -1,10 +1,9 @@
 'use client';
 
-import { ArrowLeft, Bus, Phone, Clock, MapPin } from 'lucide-react';
+import { ArrowLeft, Bus, Phone } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Separator } from '@/components/ui/separator';
 import { Map } from '@/components/map';
 import { stops } from '@/lib/data';
 import Link from 'next/link';
@@ -17,12 +16,7 @@ export default function BusLiveLocationPage() {
       name: 'Sajen Kenectus',
       avatarUrl: 'https://placehold.co/100x100.png',
     },
-    currentStatus: 'Approaching Ikate Junction',
-    etaToNextStop: '5 mins',
-    nextStop: 'Ikate Junction',
   };
-
-  const upcomingStops = stops.slice(2, 5); // Mock data for upcoming stops
 
   return (
     <div className="flex flex-col h-full bg-muted/30">
@@ -39,7 +33,7 @@ export default function BusLiveLocationPage() {
         <Map stops={stops} />
       </div>
 
-      <div className="flex-1 overflow-y-auto bg-background">
+      <main className="flex-1 overflow-y-auto bg-background">
         <Card className="rounded-t-2xl -mt-4 rounded-b-none shadow-none border-t-2 border-b-0">
           <CardHeader className="pt-6">
             <div className="flex items-center justify-between">
@@ -57,7 +51,7 @@ export default function BusLiveLocationPage() {
                </Button>
             </div>
           </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent className="space-y-4 pb-4">
              <Card className="bg-muted/50">
                 <CardContent className="p-4 flex items-center gap-4">
                     <Avatar className="h-14 w-14">
@@ -70,48 +64,15 @@ export default function BusLiveLocationPage() {
                     </div>
                 </CardContent>
              </Card>
-
-            <div>
-                <h3 className="font-semibold mb-2">Trip Details</h3>
-                <div className="grid grid-cols-2 gap-4 text-sm">
-                    <div className="flex items-center gap-2">
-                        <MapPin className="h-5 w-5 text-muted-foreground" />
-                        <div>
-                            <p className="text-muted-foreground">Current Status</p>
-                            <p className="font-semibold">{currentTrip.currentStatus}</p>
-                        </div>
-                    </div>
-                    <div className="flex items-center gap-2">
-                        <Clock className="h-5 w-5 text-muted-foreground" />
-                        <div>
-                            <p className="text-muted-foreground">ETA to next stop</p>
-                            <p className="font-semibold">{currentTrip.etaToNextStop}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <Separator />
-            
-            <div>
-              <h3 className="font-semibold mb-3">Upcoming Stops</h3>
-              <ul className="space-y-4">
-                {upcomingStops.map((stop, index) => (
-                  <li key={stop.id} className="flex items-center gap-4">
-                    <div className="flex flex-col items-center">
-                        <div className="h-5 w-5 rounded-full bg-primary/20 border-2 border-primary flex items-center justify-center">
-                           {index === 0 && <div className="h-2 w-2 rounded-full bg-primary" />}
-                        </div>
-                       {index < upcomingStops.length - 1 && <div className="w-0.5 h-6 bg-border" />}
-                    </div>
-                    <p className="font-medium">{stop.name}</p>
-                  </li>
-                ))}
-              </ul>
-            </div>
           </CardContent>
         </Card>
-      </div>
+      </main>
+      
+      <footer className="p-4 border-t bg-background sticky bottom-0 z-10">
+        <Button size="lg" className="w-full h-14 text-lg font-bold">
+            Make Payment
+        </Button>
+      </footer>
     </div>
   );
 }

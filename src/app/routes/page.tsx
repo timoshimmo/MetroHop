@@ -2,10 +2,8 @@
 
 import { useState } from 'react';
 import { Input } from '@/components/ui/input';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Search, MapPin, Bus, ArrowLeft } from 'lucide-react';
-import { RouteCard } from '@/components/route-card';
-import { allRoutes, locations, stops } from '@/lib/data';
+import { Search, MapPin, ArrowLeft } from 'lucide-react';
+import { nigerianCities } from '@/lib/data';
 import { Card, CardContent } from '@/components/ui/card';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
@@ -15,20 +13,9 @@ export default function RoutesPage() {
 
   const lowercasedQuery = searchQuery.toLowerCase();
 
-  const filteredRoutes = allRoutes.filter(trip =>
-    trip.name.toLowerCase().includes(lowercasedQuery) ||
-    trip.from.toLowerCase().includes(lowercasedQuery) ||
-    trip.to.toLowerCase().includes(lowercasedQuery)
-  );
-
-  const filteredLocations = locations.filter(location =>
-    location.name.toLowerCase().includes(lowercasedQuery) ||
-    location.address.toLowerCase().includes(lowercasedQuery)
-  );
-
-  const filteredStops = stops.filter(stop =>
-    stop.name.toLowerCase().includes(lowercasedQuery) ||
-    stop.routes.some(route => route.toLowerCase().includes(lowercasedQuery))
+  const filteredCities = nigerianCities.filter(city =>
+    city.name.toLowerCase().includes(lowercasedQuery) ||
+    city.state.toLowerCase().includes(lowercasedQuery)
   );
 
   return (
@@ -39,7 +26,7 @@ export default function RoutesPage() {
             <ArrowLeft className="h-6 w-6" />
           </Button>
         </Link>
-        <h1 className="text-xl font-bold font-headline">Find Your Route</h1>
+        <h1 className="text-xl font-bold font-headline">Select a City</h1>
       </header>
 
       <main className="flex-1 overflow-y-auto p-4">
@@ -52,55 +39,22 @@ export default function RoutesPage() {
               onChange={(e) => setSearchQuery(e.target.value)}
             />
         </div>
-
-        <Tabs defaultValue="routes">
-            <TabsList className="grid w-full grid-cols-3 mb-4">
-                <TabsTrigger value="routes">All Routes</TabsTrigger>
-                <TabsTrigger value="locations">Locations</TabsTrigger>
-                <TabsTrigger value="stops">Bus Stops</TabsTrigger>
-            </TabsList>
-            <TabsContent value="routes">
-              <div className="space-y-4">
-                {filteredRoutes.map((trip) => (
-                  <RouteCard key={trip.id} trip={trip} />
-                ))}
-              </div>
-            </TabsContent>
-            <TabsContent value="locations">
-              <div className="space-y-3">
-                {filteredLocations.map((location) => (
-                  <Card key={location.id} className="hover:bg-muted/50 transition-colors">
-                    <CardContent className="p-4 flex items-center gap-4">
-                      <div className="p-3 bg-primary/10 rounded-lg">
-                         <MapPin className="h-6 w-6 text-primary" />
-                      </div>
-                      <div>
-                        <h3 className="font-semibold font-headline">{location.name}</h3>
-                        <p className="text-sm text-muted-foreground">{location.address}</p>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            </TabsContent>
-            <TabsContent value="stops">
-              <div className="space-y-3">
-                 {filteredStops.map((stop) => (
-                  <Card key={stop.id} className="hover:bg-muted/50 transition-colors">
-                    <CardContent className="p-4 flex items-center gap-4">
-                      <div className="p-3 bg-primary/10 rounded-lg">
-                        <Bus className="h-6 w-6 text-primary" />
-                      </div>
-                      <div>
-                        <h3 className="font-semibold font-headline">{stop.name}</h3>
-                        <p className="text-sm text-muted-foreground">Routes: {stop.routes.join(', ')}</p>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            </TabsContent>
-        </Tabs>
+        
+        <div className="space-y-3">
+          {filteredCities.map((city) => (
+            <Card key={city.id} className="hover:bg-muted/50 transition-colors cursor-pointer">
+              <CardContent className="p-4 flex items-center gap-4">
+                <div className="p-3 bg-primary/10 rounded-lg">
+                    <MapPin className="h-6 w-6 text-primary" />
+                </div>
+                <div>
+                  <h3 className="font-semibold font-headline">{city.name}</h3>
+                  <p className="text-sm text-muted-foreground">{city.state} State</p>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
       </main>
     </div>
   );

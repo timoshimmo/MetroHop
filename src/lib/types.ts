@@ -29,3 +29,9 @@ export interface Promo {
     description: string;
     iconUrl: string;
 }
+
+export interface City {
+  id: string;
+  name: string;
+  state: string;
+}

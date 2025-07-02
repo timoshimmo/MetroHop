@@ -1,4 +1,4 @@
-import type { Trip, Location, Stop, Promo } from './types';
+import type { Trip, Location, Stop, Promo, City } from './types';
 
 export const recentTrips: Trip[] = [
   {
@@ -164,3 +164,16 @@ export const promos: Promo[] = [
     iconUrl: 'https://placehold.co/40x40.png',
   },
 ]
+
+export const nigerianCities: City[] = [
+  { id: 'city1', name: 'Lagos', state: 'Lagos' },
+  { id: 'city2', name: 'Abuja', state: 'FCT' },
+  { id: 'city3', name: 'Port Harcourt', state: 'Rivers' },
+  { id: 'city4', name: 'Kano', state: 'Kano' },
+  { id: 'city5', name: 'Ibadan', state: 'Oyo' },
+  { id: 'city6', name: 'Benin City', state: 'Edo' },
+  { id: 'city7', name: 'Enugu', state: 'Enugu' },
+  { id: 'city8', name: 'Kaduna', state: 'Kaduna' },
+  { id: 'city9', name: 'Abeokuta', state: 'Ogun' },
+  { id: 'city10', name: 'Onitsha', state: 'Anambra' },
+];

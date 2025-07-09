@@ -92,52 +92,6 @@ export default function HomePage() {
           </Link>
         </div>
 
-        <Card className="bg-red-50 border-red-200 shadow-md">
-            <CardContent className="p-4 space-y-3">
-                <div className="flex justify-between items-center">
-                    <h3 className="font-bold text-destructive">Pay Before</h3>
-                    <Badge variant="destructive" className="flex gap-1.5">
-                        <Clock className="h-3 w-3" />
-                        <span>23 : 55 : 12</span>
-                    </Badge>
-                </div>
-                <Separator />
-                <div className="flex justify-between items-center">
-                    <div>
-                        <p className="text-sm text-muted-foreground">Departure</p>
-                        <p className="font-bold text-lg">05:15</p>
-                    </div>
-                    <div className="text-center text-sm text-muted-foreground">
-                        <p>1hr 20m</p>
-                        <ArrowRight className="w-full" />
-                    </div>
-                    <div>
-                        <p className="text-sm text-muted-foreground">Arrival</p>
-                        <p className="font-bold text-lg">10:35</p>
-                    </div>
-                     <div className="text-right">
-                        <p className="text-sm text-muted-foreground flex items-center gap-1"><Calendar className="h-3 w-3" /> 12 Oct 2024</p>
-                    </div>
-                </div>
-                 <div className="text-sm text-muted-foreground">
-                    <p>Allen Avenue Junction... - Terminal Ebute...</p>
-                </div>
-                <div className="flex items-center gap-2 text-sm">
-                  <Bus className="h-4 w-4 text-primary" />
-                  <p className="font-semibold">TransBus</p>
-                  <p className="text-muted-foreground">Sajen Kenectus - vipbus 01</p>
-                </div>
-                <Separator />
-                <div className="flex justify-between items-center">
-                    <p className="text-muted-foreground">Total Payment</p>
-                    <p className="font-bold text-lg text-primary">₦40,000</p>
-                </div>
-                 <Button className="w-full h-12 bg-primary hover:bg-primary/90">
-                    Complete Payment in 00:{formatTime(timeLeft)}
-                </Button>
-            </CardContent>
-        </Card>
-
         <section>
           <div className="flex justify-between items-center mb-2">
             <h2 className="text-xl font-bold font-headline">My Ticket</h2>

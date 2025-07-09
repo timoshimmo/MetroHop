@@ -75,6 +75,22 @@ export default function HomePage() {
 
         <section>
           <div className="flex justify-between items-center mb-2">
+            <h2 className="text-xl font-bold font-headline">My Ticket</h2>
+            <Link href="/tickets" className="text-sm text-primary font-semibold">See All</Link>
+          </div>
+          <div className="space-y-4">
+              {activeTickets.length > 0 ? (
+                activeTickets.map((trip) => (
+                    <TicketCard key={trip.id} trip={trip} />
+                ))
+              ) : (
+                <p className="text-center text-muted-foreground pt-4">No active tickets found.</p>
+              )}
+          </div>
+        </section>
+
+        <section>
+          <div className="flex justify-between items-center mb-2">
             <h2 className="text-xl font-bold font-headline">Recent Trips</h2>
             <Link href="/history" className="text-sm text-primary font-semibold">See All</Link>
           </div>
@@ -99,22 +115,6 @@ export default function HomePage() {
               ))}
             </CardContent>
           </Card>
-        </section>
-
-        <section>
-          <div className="flex justify-between items-center mb-2">
-            <h2 className="text-xl font-bold font-headline">My Ticket</h2>
-            <Link href="/tickets" className="text-sm text-primary font-semibold">See All</Link>
-          </div>
-          <div className="space-y-4">
-              {activeTickets.length > 0 ? (
-                activeTickets.map((trip) => (
-                    <TicketCard key={trip.id} trip={trip} />
-                ))
-              ) : (
-                <p className="text-center text-muted-foreground pt-4">No active tickets found.</p>
-              )}
-          </div>
         </section>
 
         <section>

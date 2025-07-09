@@ -136,15 +136,15 @@ export const historyTrips: Trip[] = [
 export const myTickets: Trip[] = [
   {
     id: 't1',
-    name: 'Chibuz Bus',
+    name: 'Lekki-Ajah Shuttle',
     from: 'Lekki Phase 1',
-    to: 'Intercity',
+    to: 'Ajah Bus Stop',
     departureTime: '06:12',
     arrivalTime: '07:30',
-    price: 2500,
-    busNumber: 'CH-IK-01',
+    price: 500,
+    busNumber: 'LK-AJ-SH',
     status: 'Active',
-    category: 'Intercity'
+    category: 'Local'
   },
     {
     id: 't2',

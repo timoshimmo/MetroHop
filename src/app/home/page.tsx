@@ -5,7 +5,6 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Settings, Plus, Star, History, Clock, Calendar, ArrowRight, Bus, Globe } from 'lucide-react';
 import { TicketCard } from '@/components/ticket-card';
 import { myTickets, promos } from '@/lib/data';
@@ -28,6 +27,13 @@ export default function HomePage() {
     const s = seconds % 60;
     return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
   };
+
+  const activeTickets = myTickets.filter(
+    (ticket) =>
+      ticket.status === 'Active' &&
+      ticket.from.toLowerCase().includes('lekki') &&
+      ticket.to.toLowerCase().includes('ajah')
+  );
 
   return (
     <div className="flex flex-col h-full bg-muted/30">
@@ -137,28 +143,15 @@ export default function HomePage() {
             <h2 className="text-xl font-bold font-headline">My Ticket</h2>
             <Link href="/tickets" className="text-sm text-primary font-semibold">See All</Link>
           </div>
-          <Tabs defaultValue="all">
-            <TabsList className="grid w-full grid-cols-3 mb-4">
-              <TabsTrigger value="all">All Ticket</TabsTrigger>
-              <TabsTrigger value="intercity">Intercity</TabsTrigger>
-              <TabsTrigger value="local">Local</TabsTrigger>
-            </TabsList>
-            <TabsContent value="all" className="space-y-4">
-              {myTickets.map((trip) => (
-                <TicketCard key={trip.id} trip={trip} />
-              ))}
-            </TabsContent>
-            <TabsContent value="intercity" className="space-y-4">
-              {myTickets.filter(t => t.category === 'Intercity').map((trip) => (
-                <TicketCard key={trip.id} trip={trip} />
-              ))}
-            </TabsContent>
-            <TabsContent value="local" className="space-y-4">
-               {myTickets.filter(t => t.category === 'Local').map((trip) => (
-                <TicketCard key={trip.id} trip={trip} />
-              ))}
-            </TabsContent>
-          </Tabs>
+          <div className="space-y-4">
+              {activeTickets.length > 0 ? (
+                activeTickets.map((trip) => (
+                    <TicketCard key={trip.id} trip={trip} />
+                ))
+              ) : (
+                <p className="text-center text-muted-foreground pt-4">No active tickets found.</p>
+              )}
+          </div>
         </section>
 
         <section>

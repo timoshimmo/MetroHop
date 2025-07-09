@@ -3,37 +3,22 @@ import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
-import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
-import { Settings, Plus, Star, History, Clock, Calendar, ArrowRight, Bus, Globe } from 'lucide-react';
+import { Settings, Plus, Star, History, ArrowRight, Bus, Globe, Circle } from 'lucide-react';
 import { TicketCard } from '@/components/ticket-card';
-import { myTickets, promos } from '@/lib/data';
-import React, { useState, useEffect } from 'react';
+import { myTickets, promos, historyTrips } from '@/lib/data';
+import React from 'react';
 import Link from 'next/link';
 
 export default function HomePage() {
-  const [timeLeft, setTimeLeft] = useState(58 * 60 + 30); // 58:30 in seconds
-
-  useEffect(() => {
-    if (timeLeft <= 0) return;
-    const timer = setTimeout(() => {
-      setTimeLeft(timeLeft - 1);
-    }, 1000);
-    return () => clearTimeout(timer);
-  }, [timeLeft]);
-
-  const formatTime = (seconds: number) => {
-    const m = Math.floor(seconds / 60);
-    const s = seconds % 60;
-    return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
-  };
-
   const activeTickets = myTickets.filter(
     (ticket) =>
       ticket.status === 'Active' &&
       ticket.from.toLowerCase().includes('lekki') &&
       ticket.to.toLowerCase().includes('ajah')
   );
+
+  const recentHistory = historyTrips.slice(0, 2);
 
   return (
     <div className="flex flex-col h-full bg-muted/30">
@@ -66,10 +51,6 @@ export default function HomePage() {
               </div>
               <Progress value={60} className="h-2" />
             </div>
-             <Link href="#" className="flex items-center text-sm text-muted-foreground hover:text-primary">
-              <History className="mr-2 h-4 w-4" />
-              Last Scanned History <ArrowRight className="ml-auto h-4 w-4" />
-            </Link>
           </CardContent>
         </Card>
         
@@ -91,6 +72,34 @@ export default function HomePage() {
             </Card>
           </Link>
         </div>
+
+        <section>
+          <div className="flex justify-between items-center mb-2">
+            <h2 className="text-xl font-bold font-headline">Recent Trips</h2>
+            <Link href="/history" className="text-sm text-primary font-semibold">See All</Link>
+          </div>
+           <Card className="shadow-md">
+            <CardContent className="p-4 space-y-4">
+              {recentHistory.map((trip, index) => (
+                <React.Fragment key={trip.id}>
+                  <div className="flex items-center justify-between text-sm">
+                    <div className="flex items-center gap-3">
+                      <div className="p-2 bg-muted rounded-full">
+                        <Bus className="h-5 w-5 text-muted-foreground" />
+                      </div>
+                      <div>
+                        <p className="font-semibold">{trip.name}</p>
+                        <p className="text-muted-foreground text-xs">{trip.departureTime}</p>
+                      </div>
+                    </div>
+                    <p className="font-bold text-primary">₦{trip.price.toLocaleString()}</p>
+                  </div>
+                  {index < recentHistory.length - 1 && <Separator />}
+                </React.Fragment>
+              ))}
+            </CardContent>
+          </Card>
+        </section>
 
         <section>
           <div className="flex justify-between items-center mb-2">

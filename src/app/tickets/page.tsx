@@ -21,17 +21,17 @@ export default function TicketsPage() {
             </TabsList>
             <TabsContent value="all" className="space-y-4">
               {myTickets.map((trip) => (
-                <TicketCard key={trip.id} trip={trip} />
+                <TicketCard key={trip.id} trip={trip} showCategory={true} />
               ))}
             </TabsContent>
             <TabsContent value="active" className="space-y-4">
               {myTickets.filter(t => t.status === 'Active' || t.status === 'Upcoming').map((trip) => (
-                <TicketCard key={trip.id} trip={trip} />
+                <TicketCard key={trip.id} trip={trip} showCategory={true} />
               ))}
             </TabsContent>
             <TabsContent value="completed" className="space-y-4">
                {myTickets.filter(t => t.status === 'Completed').map((trip) => (
-                <TicketCard key={trip.id} trip={trip} />
+                <TicketCard key={trip.id} trip={trip} showCategory={true} />
               ))}
             </TabsContent>
           </Tabs>

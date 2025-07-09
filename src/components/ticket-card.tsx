@@ -8,9 +8,10 @@ import { cn } from '@/lib/utils';
 
 interface TicketCardProps {
   trip: Trip;
+  showCategory?: boolean;
 }
 
-export function TicketCard({ trip }: TicketCardProps) {
+export function TicketCard({ trip, showCategory = true }: TicketCardProps) {
   const getStatusBadge = () => {
     switch (trip.status) {
       case 'Active':
@@ -25,6 +26,8 @@ export function TicketCard({ trip }: TicketCardProps) {
   }
 
    const getCategoryBadge = () => {
+    if (!showCategory) return null;
+    
     switch (trip.category) {
       case 'Intercity':
         return <Badge variant="outline" className="text-purple-600 border-purple-300">{trip.category}</Badge>;

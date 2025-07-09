@@ -81,7 +81,7 @@ export default function HomePage() {
           <div className="space-y-4">
               {activeTickets.length > 0 ? (
                 activeTickets.map((trip) => (
-                    <TicketCard key={trip.id} trip={trip} />
+                    <TicketCard key={trip.id} trip={trip} showCategory={false} />
                 ))
               ) : (
                 <p className="text-center text-muted-foreground pt-4">No active tickets found.</p>

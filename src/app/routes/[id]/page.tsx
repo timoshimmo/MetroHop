@@ -42,7 +42,7 @@ export default function RouteDetailsPage({ params }: { params: { id: string } })
 
   const duration = calculateDuration(route.departureTime, route.arrivalTime);
 
-  const routeStops = stops.filter(stop => stop.routes.includes(route.busNumber));
+  const routeStops = stops.filter(stop => route.busNumber && stop.routes.includes(route.busNumber));
   
   useEffect(() => {
     if (!directions?.routes?.[0]?.overview_path) return;
@@ -81,7 +81,7 @@ export default function RouteDetailsPage({ params }: { params: { id: string } })
             <ArrowLeft className="h-6 w-6" />
           </Button>
         </Link>
-        <h1 className="text-xl font-bold font-headline truncate">{route.name}</h1>
+        <h1 className="text-xl font-bold font-headline truncate">{route.routeNumber}</h1>
       </header>
 
       <div className="relative w-full h-1/2 bg-muted">

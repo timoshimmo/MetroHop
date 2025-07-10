@@ -28,14 +28,14 @@ export default function BusLiveLocationPage() {
     if (!trip) return [];
     // A real app would have a more robust way to link trips to stops.
     // For this demo, we'll find stops that are part of the bus's route number.
-    return stops.filter(s => s.routes.includes(trip.busNumber));
+    return stops.filter(s => trip.busNumber && s.routes.includes(trip.busNumber));
   }, [trip]);
   
   const currentTrip = useMemo(() => {
       if (!trip) return null;
       return {
         busNumber: trip.busNumber,
-        operator: trip.name, // Assuming trip name is the operator
+        operator: trip.routeNumber, // Assuming trip name is the operator
         driver: {
           name: 'Sajen Kenectus',
           avatarUrl: 'https://placehold.co/100x100.png',
@@ -135,7 +135,7 @@ export default function BusLiveLocationPage() {
              <Card className="bg-muted/50">
                 <CardContent className="p-4 flex items-center gap-4">
                     <Avatar className="h-14 w-14">
-                        <AvatarImage src={currentTrip.driver.avatarUrl} alt={currentTrip.driver.name} data-ai-hint="person portrait"/>
+                        <AvatarImage src={currentTrip.driver.avatarUrl} alt={currentTrip.driver.name || ''} data-ai-hint="person portrait"/>
                         <AvatarFallback>{currentTrip.driver.name.charAt(0)}</AvatarFallback>
                     </Avatar>
                     <div>

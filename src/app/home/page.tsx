@@ -106,7 +106,7 @@ export default function HomePage() {
                         <Bus className="h-5 w-5 text-muted-foreground" />
                       </div>
                       <div>
-                        <p className="font-semibold">{trip.name}</p>
+                        <p className="font-semibold">{trip.routeNumber}</p>
                         <p className="text-muted-foreground text-xs">{trip.departureTime}</p>
                       </div>
                     </div>

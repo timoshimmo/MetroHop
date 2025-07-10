@@ -25,14 +25,14 @@ export default function TripStatusPage() {
 
   const routeStops = useMemo(() => {
     if (!trip) return [];
-    return stops.filter(s => s.routes.includes(trip.busNumber));
+    return stops.filter(s => trip.busNumber && s.routes.includes(trip.busNumber));
   }, [trip]);
   
   const currentTrip = useMemo(() => {
       if (!trip) return null;
       return {
         busNumber: trip.busNumber,
-        operator: trip.name,
+        operator: trip.routeNumber,
         driver: {
           name: 'Sajen Kenectus',
           avatarUrl: 'https://placehold.co/100x100.png',

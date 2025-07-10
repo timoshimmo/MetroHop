@@ -52,7 +52,7 @@ export function TicketCard({ trip, showCategory = true }: TicketCardProps) {
           </div>
           
           <div>
-              <h3 className="font-bold text-lg font-headline">{trip.name}</h3>
+              <h3 className="font-bold text-lg font-headline">{trip.routeNumber}</h3>
               <p className="text-sm text-muted-foreground flex items-center gap-2">
                 <Bus className="h-4 w-4" />
                 Bus No: {trip.busNumber}

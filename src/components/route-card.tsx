@@ -22,6 +22,7 @@ export function RouteCard({ trip, showStatus = false }: RouteCardProps) {
               </div>
               <div>
                 <h3 className="font-bold text-lg font-headline">{trip.name}</h3>
+                <p className="text-sm text-muted-foreground">Route: {trip.busNumber}</p>
               </div>
             </div>
             {showStatus && <Badge variant={trip.status === 'Completed' ? 'secondary' : 'default'}>{trip.status}</Badge>}

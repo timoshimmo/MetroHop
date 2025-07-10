@@ -111,7 +111,7 @@ export default function BusLiveLocationPage() {
                     <MapPin className="h-8 w-8 text-accent-foreground" />
                 </div>
                 <div>
-                    <p className="text-sm text-muted-foreground">Current Location</p>
+                    <p className="text-sm text-muted-foreground">Next Stop</p>
                     <h2 className="font-bold text-lg">{nextStopInfo.name}</h2>
                     <p className="text-sm text-primary font-semibold">ETA: {nextStopInfo.eta}</p>
                 </div>

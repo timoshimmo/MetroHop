@@ -40,9 +40,11 @@ export default function HomePage() {
                 <p className="text-sm text-muted-foreground">Balance</p>
                 <p className="text-2xl font-bold">₦25,000</p>
               </div>
-              <Button size="sm">
-                <Plus className="mr-2 h-4 w-4" /> Top up
-              </Button>
+              <Link href="/wallet">
+                <Button size="sm">
+                  <Plus className="mr-2 h-4 w-4" /> Top up
+                </Button>
+              </Link>
             </div>
             <div className="space-y-2">
               <div className="flex justify-between text-sm">

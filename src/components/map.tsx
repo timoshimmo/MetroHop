@@ -24,12 +24,13 @@ interface MapProps {
 
 // IMPORTANT: Replace this with your actual Google Maps API key.
 // You can get one from the Google Cloud Console.
-const API_KEY = 'AIzaSyDdvxkcx9kamfF4kBQmcQfURxO7V_NdhnY';
+const API_KEY = 'YOUR_GOOGLE_MAPS_API_KEY_HERE';
 
 export function Map({ stops, busLocation }: MapProps) {
   const { isLoaded, loadError } = useJsApiLoader({
     id: 'google-map-script',
     googleMapsApiKey: API_KEY,
+    libraries: ['geometry'],
   });
 
   const [directions, setDirections] = useState<google.maps.DirectionsResult | null>(null);

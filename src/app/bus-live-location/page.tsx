@@ -66,7 +66,7 @@ export default function BusLiveLocationPage() {
       if (step > 1) {
         step = 0; // Loop animation
       }
-    }, 200);
+    }, 2000);
 
     return () => clearInterval(interval);
 

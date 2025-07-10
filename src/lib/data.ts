@@ -10,7 +10,8 @@ export const localRoutes: Trip[] = [
     arrivalTime: '08:45 AM',
     price: 500,
     busNumber: 'LK-AJ-01',
-    category: 'Local'
+    category: 'Local',
+    seatsAvailable: 12,
   },
   {
     id: '2',
@@ -21,7 +22,8 @@ export const localRoutes: Trip[] = [
     arrivalTime: '09:45 AM',
     price: 300,
     busNumber: 'LK-CH-02',
-    category: 'Local'
+    category: 'Local',
+    seatsAvailable: 8,
   },
     {
     id: '3',
@@ -32,7 +34,8 @@ export const localRoutes: Trip[] = [
     arrivalTime: '11:30 AM',
     price: 350,
     busNumber: 'IK-VGC-03',
-    category: 'Local'
+    category: 'Local',
+    seatsAvailable: 15,
   },
   {
     id: '4',
@@ -43,7 +46,8 @@ export const localRoutes: Trip[] = [
     arrivalTime: '01:15 PM',
     price: 500,
     busNumber: 'AJ-LK-04',
-    category: 'Local'
+    category: 'Local',
+    seatsAvailable: 3,
   },
    {
     id: '5',
@@ -54,7 +58,8 @@ export const localRoutes: Trip[] = [
     arrivalTime: '02:20 PM',
     price: 200,
     busNumber: 'VGC-CH-05',
-    category: 'Local'
+    category: 'Local',
+    seatsAvailable: 20,
   },
 ];
 
@@ -69,7 +74,8 @@ export const allRoutes: Trip[] = [
     arrivalTime: '06:00 PM',
     price: 15000,
     busNumber: 'LA-ABJ-01',
-    category: 'Intercity'
+    category: 'Intercity',
+    seatsAvailable: 5,
   },
   {
     id: 'inter2',
@@ -80,7 +86,8 @@ export const allRoutes: Trip[] = [
     arrivalTime: '12:00 PM',
     price: 8000,
     busNumber: 'PH-EN-01',
-    category: 'Intercity'
+    category: 'Intercity',
+    seatsAvailable: 10,
   },
   {
     id: 'inter3',
@@ -91,7 +98,8 @@ export const allRoutes: Trip[] = [
     arrivalTime: '12:00 PM',
     price: 5000,
     busNumber: 'KN-KD-01',
-    category: 'Intercity'
+    category: 'Intercity',
+    seatsAvailable: 2,
   },
   {
     id: 'inter4',
@@ -102,7 +110,8 @@ export const allRoutes: Trip[] = [
     arrivalTime: '01:00 PM',
     price: 4500,
     busNumber: 'IB-LA-01',
-    category: 'Intercity'
+    category: 'Intercity',
+    seatsAvailable: 18,
   },
 ];
 

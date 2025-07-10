@@ -2,7 +2,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { ArrowLeft, ArrowRight, Banknote, Bus, Clock } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Banknote, Bus, Clock, Armchair } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
@@ -128,6 +128,15 @@ export default function RouteDetailsPage({ params }: { params: { id: string } })
                         <p className="font-bold text-primary text-base">₦{route.price.toLocaleString()}</p>
                     </div>
                 </div>
+                {route.seatsAvailable !== undefined && (
+                  <div className="flex items-center gap-2">
+                      <Armchair className="h-5 w-5 text-muted-foreground" />
+                      <div>
+                          <p className="text-muted-foreground">Seats Available</p>
+                          <p className="font-semibold">{route.seatsAvailable}</p>
+                      </div>
+                  </div>
+                )}
             </div>
           </CardContent>
         </Card>

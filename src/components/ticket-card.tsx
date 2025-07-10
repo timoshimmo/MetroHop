@@ -40,7 +40,7 @@ export function TicketCard({ trip, showCategory = true }: TicketCardProps) {
 
 
   return (
-    <Link href={`/bus-live-location?price=${trip.price}`}>
+    <Link href={`/trip-status/${trip.id}`}>
       <Card className="overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 cursor-pointer">
         <CardContent className="p-4 space-y-3">
           <div className="flex justify-between items-start">

@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -24,16 +25,18 @@ export default function RouteDetailsPage({ params }: { params: { id: string } })
   const routeStops = stops.filter(stop => stop.routes.includes(route.busNumber));
   
   useEffect(() => {
-    if (!directions || !directions.routes[0]) return;
+    if (!directions?.routes?.[0]?.overview_path) return;
 
     const path = directions.routes[0].overview_path;
-
     if (path.length < 2) return;
     
     let step = 0;
     const animationSpeed = 0.001; // Controls speed of marker
 
     const interval = setInterval(() => {
+      // Ensure step loops back to 0
+      step = (step + animationSpeed) % 1;
+      
       const pointIndex = Math.floor(step * (path.length -1));
       const newLocation = path[pointIndex];
       
@@ -41,10 +44,6 @@ export default function RouteDetailsPage({ params }: { params: { id: string } })
         setBusLocation({ lat: newLocation.lat(), lng: newLocation.lng() });
       }
 
-      step += animationSpeed;
-      if (step > 1) {
-        step = 0; // Loop animation
-      }
     }, 100); // Update every 100ms for smoother animation
 
     return () => clearInterval(interval);

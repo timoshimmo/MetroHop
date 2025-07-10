@@ -52,7 +52,7 @@ export default function BusLiveLocationPage() {
     if (path.length < 2) return;
     
     let step = 0;
-    const animationSpeed = 0.00005;
+    const animationSpeed = 0.0001;
 
     const interval = setInterval(() => {
       const pointIndex = Math.floor(step * path.length);

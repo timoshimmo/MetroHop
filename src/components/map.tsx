@@ -1,7 +1,7 @@
 
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { GoogleMap, useJsApiLoader, MarkerF, DirectionsRenderer, InfoWindowF } from '@react-google-maps/api';
 
 const containerStyle = {
@@ -37,8 +37,9 @@ export function Map({ stops, busLocation, onDirectionsChange }: MapProps) {
 
   const [directions, setDirections] = useState<google.maps.DirectionsResult | null>(null);
   const [selectedStop, setSelectedStop] = useState<string | null>(null);
+  const [mapCenter, setMapCenter] = useState({ lat: 6.45, lng: 3.55 });
 
-  const center = React.useMemo(() => {
+  useEffect(() => {
     const path = stops
       .filter((stop) => stop.lat && stop.lng)
       .map((stop) => ({ lat: stop.lat!, lng: stop.lng! }));
@@ -46,10 +47,8 @@ export function Map({ stops, busLocation, onDirectionsChange }: MapProps) {
     if (path.length > 0) {
       const avgLat = path.reduce((sum, point) => sum + point.lat, 0) / path.length;
       const avgLng = path.reduce((sum, point) => sum + point.lng, 0) / path.length;
-      return { lat: avgLat, lng: avgLng };
+      setMapCenter({ lat: avgLat, lng: avgLng });
     }
-    // Default center if no stops or no coords
-    return { lat: 6.45, lng: 3.55 };
   }, [stops]);
 
   useEffect(() => {
@@ -99,7 +98,7 @@ export function Map({ stops, busLocation, onDirectionsChange }: MapProps) {
   }, [isLoaded, stops, onDirectionsChange]);
 
 
-  const busIcon = React.useMemo(() => {
+  const busIcon = useMemo(() => {
     if (!isLoaded) return undefined;
     const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" id="bus-stop-location">
   <ellipse cx="32" cy="53.5" fill="#fccd1d" rx="29" ry="7.5"></ellipse>
@@ -149,7 +148,7 @@ export function Map({ stops, busLocation, onDirectionsChange }: MapProps) {
   return (
     <GoogleMap
       mapContainerStyle={containerStyle}
-      center={center}
+      center={mapCenter}
       zoom={14}
       options={{
         disableDefaultUI: true,

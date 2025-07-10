@@ -7,31 +7,44 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Map } from '@/components/map';
-import { stops } from '@/lib/data';
+import { stops, myTickets } from '@/lib/data';
 import Link from 'next/link';
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import { notFound } from 'next/navigation';
 
 export default function BusLiveLocationPage() {
   const searchParams = useSearchParams();
   const priceParam = searchParams.get('price');
   const price = priceParam ? parseInt(priceParam, 10) : 0;
+  
+  // A real app would get the ticket ID from the URL, but for now we find the first active one.
+  const trip = useMemo(() => myTickets.find(t => t.status === 'Active'), []);
 
   const [busLocation, setBusLocation] = useState({ lat: 6.447, lng: 3.473 });
   const [directions, setDirections] = useState<google.maps.DirectionsResult | null>(null);
 
-  const currentTrip = useMemo(() => ({
-    busNumber: 'CH-IK-01',
-    operator: 'Chibuz Bus',
-    driver: {
-      name: 'Sajen Kenectus',
-      avatarUrl: 'https://placehold.co/100x100.png',
-    },
-    currentLocationName: "Ikate Junction",
-    eta: "5 mins"
-  }), []);
-
-  const routeStops = useMemo(() => stops.slice(0, 2), []);
+  const routeStops = useMemo(() => {
+    if (!trip) return [];
+    // A real app would have a more robust way to link trips to stops.
+    // For this demo, we'll find stops that are part of the bus's route number.
+    return stops.filter(s => s.routes.includes(trip.busNumber));
+  }, [trip]);
   
+  const currentTrip = useMemo(() => {
+      if (!trip) return null;
+      return {
+        busNumber: trip.busNumber,
+        operator: trip.name, // Assuming trip name is the operator
+        driver: {
+          name: 'Sajen Kenectus',
+          avatarUrl: 'https://placehold.co/100x100.png',
+        },
+        currentLocationName: "Ikate Junction",
+        eta: "5 mins"
+      }
+  }, [trip]);
+
+
   useEffect(() => {
     if (!directions) return;
 
@@ -58,7 +71,18 @@ export default function BusLiveLocationPage() {
     return () => clearInterval(interval);
 
   }, [directions]);
-
+  
+  if (!currentTrip) {
+      // Or show a proper "not found" page
+      return (
+        <div className="flex flex-col h-full bg-muted/30 items-center justify-center">
+             <p>No active trip found.</p>
+             <Link href="/home">
+                <Button variant="link">Go Home</Button>
+             </Link>
+        </div>
+      )
+  }
 
   return (
     <div className="flex flex-col h-full bg-muted/30">

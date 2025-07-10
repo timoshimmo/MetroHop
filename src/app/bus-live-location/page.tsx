@@ -1,7 +1,8 @@
+
 'use client';
 
 import { useSearchParams } from 'next/navigation';
-import { ArrowLeft, Bus, Phone } from 'lucide-react';
+import { ArrowLeft, Bus, Phone, MapPin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -21,6 +22,12 @@ export default function BusLiveLocationPage() {
       name: 'Sajen Kenectus',
       avatarUrl: 'https://placehold.co/100x100.png',
     },
+    busLocation: {
+        lat: 6.435,
+        lng: 3.51,
+    },
+    currentLocationName: "Ikate Junction",
+    eta: "5 mins"
   };
 
   return (
@@ -35,13 +42,25 @@ export default function BusLiveLocationPage() {
       </header>
 
       <div className="relative w-full h-1/2 bg-muted z-10">
-        <Map stops={stops} />
+        <Map stops={stops} busLocation={currentTrip.busLocation} />
       </div>
 
       <main className="flex-1 overflow-y-auto bg-background">
         <Card className="rounded-t-2xl -mt-4 rounded-b-none shadow-none border-t-2 border-b-0">
           <CardHeader className="pt-6">
-            <div className="flex items-center justify-between">
+             <div className="flex items-center gap-3">
+                <div className="p-3 bg-accent rounded-lg">
+                    <MapPin className="h-8 w-8 text-accent-foreground" />
+                </div>
+                <div>
+                    <p className="text-sm text-muted-foreground">Current Location</p>
+                    <h2 className="font-bold text-lg">{currentTrip.currentLocationName}</h2>
+                    <p className="text-sm text-primary font-semibold">ETA: {currentTrip.eta}</p>
+                </div>
+              </div>
+          </CardHeader>
+          <CardContent className="space-y-4 pb-4">
+             <div className="flex items-center justify-between p-4 border rounded-lg">
               <div className="flex items-center gap-3">
                 <div className="p-3 bg-primary/10 rounded-lg">
                     <Bus className="h-8 w-8 text-primary" />
@@ -55,8 +74,6 @@ export default function BusLiveLocationPage() {
                   <Phone className="h-5 w-5" />
                </Button>
             </div>
-          </CardHeader>
-          <CardContent className="space-y-4 pb-4">
              <Card className="bg-muted/50">
                 <CardContent className="p-4 flex items-center gap-4">
                     <Avatar className="h-14 w-14">

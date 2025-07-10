@@ -36,24 +36,38 @@ export default function BusLiveLocationPage() {
 
   useEffect(() => {
     // Animate bus along the route path
+    if (routePath.length < 2) return;
+
     let step = 0;
+    const animationSpeed = 0.0005; // Adjust for slower or faster animation
+    
     const interval = setInterval(() => {
-      step = (step + 0.005) % 1; // Controls speed of the bus
-      
-      const segmentIndex = Math.floor(step * (routePath.length - 1));
-      const segmentProgress = (step * (routePath.length - 1)) % 1;
+      // Calculate current position on the route path
+      const totalSegments = routePath.length - 1;
+      const currentSegmentIndex = Math.floor(step * totalSegments);
+      const segmentProgress = (step * totalSegments) % 1;
 
-      if (routePath.length > 1 && segmentIndex < routePath.length -1) {
-        const startPoint = routePath[segmentIndex];
-        const endPoint = routePath[segmentIndex + 1];
-
-        const lat = startPoint.lat + (endPoint.lat - startPoint.lat) * segmentProgress;
-        const lng = startPoint.lng + (endPoint.lng - startPoint.lng) * segmentProgress;
-        
-        setBusLocation({ lat, lng });
+      if (currentSegmentIndex >= totalSegments) {
+        // Reached the end, stop or loop
+        setBusLocation(routePath[totalSegments]);
+        clearInterval(interval);
+        return;
       }
 
-    }, 2000); // Update every 2 seconds
+      const startPoint = routePath[currentSegmentIndex];
+      const endPoint = routePath[currentSegmentIndex + 1];
+
+      const lat = startPoint.lat + (endPoint.lat - startPoint.lat) * segmentProgress;
+      const lng = startPoint.lng + (endPoint.lng - startPoint.lng) * segmentProgress;
+      
+      setBusLocation({ lat, lng });
+
+      step += animationSpeed;
+      if (step > 1) {
+        step = 1; // Clamp to the end
+      }
+
+    }, 100); // Update every 100ms for smoother animation
 
     return () => clearInterval(interval);
   }, [routePath]);

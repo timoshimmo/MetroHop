@@ -2,7 +2,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { ArrowLeft, ArrowRight, Banknote, Bus, Clock, Armchair, Route } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Banknote, Clock, Armchair, Route } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
@@ -10,6 +10,7 @@ import { allRoutes, localRoutes, stops } from '@/lib/data';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { Map } from '@/components/map';
+import { parse, formatDistanceStrict } from 'date-fns';
 
 export default function RouteDetailsPage({ params }: { params: { id: string } }) {
   const combinedRoutes = [...allRoutes, ...localRoutes];
@@ -21,6 +22,25 @@ export default function RouteDetailsPage({ params }: { params: { id: string } })
   if (!route) {
     notFound();
   }
+  
+  const calculateDuration = (start: string, end: string): string => {
+    try {
+      const baseDate = '2024-01-01';
+      const startTime = parse(`${baseDate} ${start}`, 'yyyy-MM-dd h:mm a', new Date());
+      const endTime = parse(`${baseDate} ${end}`, 'yyyy-MM-dd h:mm a', new Date());
+
+      if (isNaN(startTime.getTime()) || isNaN(endTime.getTime())) {
+         return '';
+      }
+
+      return formatDistanceStrict(endTime, startTime);
+    } catch (error) {
+      console.error("Error calculating duration:", error);
+      return '';
+    }
+  };
+
+  const duration = calculateDuration(route.departureTime, route.arrivalTime);
 
   const routeStops = stops.filter(stop => stop.routes.includes(route.busNumber));
   
@@ -31,10 +51,9 @@ export default function RouteDetailsPage({ params }: { params: { id: string } })
     if (path.length < 2) return;
     
     let step = 0;
-    const animationSpeed = 0.005; // Controls speed of marker
+    const animationSpeed = 0.005; 
 
     const interval = setInterval(() => {
-      // Ensure step loops back to 0
       step = (step + animationSpeed);
       if (step > 1) {
         step = 0;
@@ -47,7 +66,7 @@ export default function RouteDetailsPage({ params }: { params: { id: string } })
         setBusLocation({ lat: newLocation.lat(), lng: newLocation.lng() });
       }
 
-    }, 1000); // Update every 100ms for smoother animation
+    }, 1000); 
 
     return () => clearInterval(interval);
 
@@ -121,6 +140,15 @@ export default function RouteDetailsPage({ params }: { params: { id: string } })
                         <p className="font-semibold">{route.routeNumber}</p>
                     </div>
                 </div>
+                {duration && (
+                   <div className="flex items-center gap-2">
+                        <Clock className="h-5 w-5 text-muted-foreground" />
+                        <div>
+                            <p className="text-muted-foreground">Duration</p>
+                            <p className="font-semibold">{duration}</p>
+                        </div>
+                    </div>
+                )}
                  <div className="flex items-center gap-2">
                     <Banknote className="h-5 w-5 text-muted-foreground" />
                     <div>

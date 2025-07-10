@@ -1,7 +1,7 @@
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { Badge } from '@/components/ui/badge';
-import { ArrowRight, Bus } from 'lucide-react';
+import { ArrowRight, Route } from 'lucide-react';
 import type { Trip } from '@/lib/types';
 import Link from 'next/link';
 
@@ -18,7 +18,7 @@ export function RouteCard({ trip, showStatus = false }: RouteCardProps) {
           <div className="flex justify-between items-start">
             <div className="flex items-center gap-3">
               <div className="p-2 bg-muted rounded-full">
-                <Bus className="h-5 w-5 text-muted-foreground" />
+                <Route className="h-5 w-5 text-muted-foreground" />
               </div>
               <div>
                 <p className="text-sm mb-0 text-muted-foreground">Route</p>

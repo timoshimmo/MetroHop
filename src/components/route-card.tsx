@@ -1,8 +1,7 @@
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { Badge } from '@/components/ui/badge';
-import { ArrowRight, Bus, Clock, MapPin } from 'lucide-react';
+import { ArrowRight, Bus } from 'lucide-react';
 import type { Trip } from '@/lib/types';
 import Link from 'next/link';
 
@@ -47,11 +46,7 @@ export function RouteCard({ trip, showStatus = false }: RouteCardProps) {
           </div>
         </CardContent>
         <CardFooter className="bg-muted/50 p-4 flex justify-between items-center">
-          <p className="font-bold text-lg text-primary">₦{trip.price}</p>
-          <Button size="sm" asChild={false}>
-            View Details
-            <ArrowRight className="ml-2 h-4 w-4" />
-          </Button>
+          <p className="font-bold text-lg text-primary">₦{trip.price.toLocaleString()}</p>
         </CardFooter>
       </Card>
     </Link>

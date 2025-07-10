@@ -92,7 +92,19 @@ export function Map({ stops, busLocation, onDirectionsChange }: MapProps) {
 
   const busIcon = React.useMemo(() => {
     if (!isLoaded) return undefined;
-    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bus"><path d="M8 6v6"/><path d="M15 6v6"/><path d="M2 12h19.6"/><path d="M18 18h3s.5-1.7.8-2.8c.1-.4.2-.8.2-1.2 0-.4-.1-.8-.2-1.2l-1.4-5C20.1 6.8 19.1 6 18 6H4a2 2 0 0 0-2 2v10h3"/><path d="M19 18h-3v-4h3z"/><circle cx="8" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg>`;
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" id="bus-stop-location">
+  <ellipse cx="32" cy="53.5" fill="#fccd1d" rx="29" ry="7.5"></ellipse>
+  <ellipse cx="32" cy="53.5" fill="#f9a215" rx="20" ry="3.5"></ellipse>
+  <path fill="#dd051d" d="M54 25a22 22 0 1 0-31.14 20l7.82 7.84a2 2 0 0 0 2.64 0L41.14 45A22 22 0 0 0 54 25Z"></path>
+  <circle cx="32" cy="25" r="18" fill="#fff"></circle>
+  <path fill="#111315" d="M25 34h4v1.27A1.73 1.73 0 0 1 27.27 37h-.54A1.73 1.73 0 0 1 25 35.27V34zm10 0h4v1.27A1.73 1.73 0 0 1 37.27 37h-.54A1.73 1.73 0 0 1 35 35.27V34z"></path>
+  <rect width="18" height="21" x="23" y="13" fill="#212529" rx="2.05"></rect>
+  <path fill="#fccd1d" d="M41 19h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-2v-5zm-20 0h2v5h-2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1z"></path>
+  <path fill="#e6e7e8" d="M23 18h18v7H23z"></path>
+  <circle cx="27" cy="30" r="1" fill="#e6e7e8"></circle>
+  <circle cx="37" cy="30" r="1" fill="#e6e7e8"></circle>
+</svg>
+`;
     return {
       url: `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(
         svg

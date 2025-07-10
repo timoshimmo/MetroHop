@@ -41,9 +41,6 @@ export function Map({ stops, busLocation }: MapProps) {
   );
   
   const center = React.useMemo(() => {
-    if (busLocation) {
-        return busLocation;
-    }
     if (path.length > 0) {
       const avgLat = path.reduce((sum, point) => sum + point.lat, 0) / path.length;
       const avgLng = path.reduce((sum, point) => sum + point.lng, 0) / path.length;
@@ -51,7 +48,7 @@ export function Map({ stops, busLocation }: MapProps) {
     }
     // Default center if no stops or no coords
     return { lat: 6.45, lng: 3.55 };
-  }, [path, busLocation]);
+  }, [path]);
 
   const busIcon = React.useMemo(() => {
     if (!isLoaded) return undefined;

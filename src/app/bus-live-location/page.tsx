@@ -9,26 +9,54 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Map } from '@/components/map';
 import { stops } from '@/lib/data';
 import Link from 'next/link';
+import React, { useState, useEffect, useMemo } from 'react';
 
 export default function BusLiveLocationPage() {
   const searchParams = useSearchParams();
   const priceParam = searchParams.get('price');
   const price = priceParam ? parseInt(priceParam, 10) : 0;
 
-  const currentTrip = {
+  const [busLocation, setBusLocation] = useState({ lat: 6.435, lng: 3.51 });
+
+  const currentTrip = useMemo(() => ({
     busNumber: 'CH-IK-01',
     operator: 'Chibuz Bus',
     driver: {
       name: 'Sajen Kenectus',
       avatarUrl: 'https://placehold.co/100x100.png',
     },
-    busLocation: {
-        lat: 6.435,
-        lng: 3.51,
-    },
     currentLocationName: "Ikate Junction",
     eta: "5 mins"
-  };
+  }), []);
+
+  const routePath = useMemo(() => stops
+    .filter(stop => stop.lat && stop.lng)
+    .map(stop => ({ lat: stop.lat!, lng: stop.lng! })), 
+  []);
+
+  useEffect(() => {
+    // Animate bus along the route path
+    let step = 0;
+    const interval = setInterval(() => {
+      step = (step + 0.005) % 1; // Controls speed of the bus
+      
+      const segmentIndex = Math.floor(step * (routePath.length - 1));
+      const segmentProgress = (step * (routePath.length - 1)) % 1;
+
+      if (routePath.length > 1 && segmentIndex < routePath.length -1) {
+        const startPoint = routePath[segmentIndex];
+        const endPoint = routePath[segmentIndex + 1];
+
+        const lat = startPoint.lat + (endPoint.lat - startPoint.lat) * segmentProgress;
+        const lng = startPoint.lng + (endPoint.lng - startPoint.lng) * segmentProgress;
+        
+        setBusLocation({ lat, lng });
+      }
+
+    }, 2000); // Update every 2 seconds
+
+    return () => clearInterval(interval);
+  }, [routePath]);
 
   return (
     <div className="flex flex-col h-full bg-muted/30">
@@ -42,7 +70,7 @@ export default function BusLiveLocationPage() {
       </header>
 
       <div className="relative w-full h-1/2 bg-muted z-10">
-        <Map stops={stops} busLocation={currentTrip.busLocation} />
+        <Map stops={stops} busLocation={busLocation} />
       </div>
 
       <main className="flex-1 overflow-y-auto bg-background">

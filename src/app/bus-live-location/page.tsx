@@ -22,6 +22,7 @@ export default function BusLiveLocationPage() {
 
   const [busLocation, setBusLocation] = useState({ lat: 6.447, lng: 3.473 });
   const [directions, setDirections] = useState<google.maps.DirectionsResult | null>(null);
+  const [nextStopInfo, setNextStopInfo] = useState<{ name: string, eta: string }>({ name: 'Loading...', eta: '...' });
 
   const routeStops = useMemo(() => {
     if (!trip) return [];
@@ -39,29 +40,51 @@ export default function BusLiveLocationPage() {
           name: 'Sajen Kenectus',
           avatarUrl: 'https://placehold.co/100x100.png',
         },
-        currentLocationName: "Ikate Junction",
-        eta: "5 mins"
       }
   }, [trip]);
 
 
   useEffect(() => {
-    if (!directions) return;
+    if (!directions || !routeStops.length) return;
 
-    const path = directions.routes[0].overview_path.map(p => ({ lat: p.lat(), lng: p.lng() }));
+    const path = directions.routes[0].overview_path;
+    const legs = directions.routes[0].legs;
+
     if (path.length < 2) return;
     
     let step = 0;
-    const animationSpeed = 0.005; // Adjust for slower or faster animation
+    const animationSpeed = 0.005;
 
     const interval = setInterval(() => {
       const pointIndex = Math.floor(step * (path.length - 1));
       const newLocation = path[pointIndex];
       
       if (newLocation) {
-        setBusLocation(newLocation);
+        setBusLocation({ lat: newLocation.lat(), lng: newLocation.lng() });
+      }
+
+      let cumulativeDuration = 0;
+      let nextStopIndex = -1;
+      
+      for(let i = 0; i < legs.length; i++) {
+        const legDuration = legs[i].duration?.value ?? 0;
+        if (step * directions.duration! < cumulativeDuration + legDuration) {
+          nextStopIndex = i + 1;
+          const timeToNextStop = (cumulativeDuration + legDuration) - (step * directions.duration!);
+          const etaMinutes = Math.ceil(timeToNextStop / 60);
+          setNextStopInfo({
+            name: routeStops[nextStopIndex]?.name || 'Destination',
+            eta: `${etaMinutes} min${etaMinutes > 1 ? 's' : ''}`
+          });
+          break;
+        }
+        cumulativeDuration += legDuration;
       }
       
+      if (nextStopIndex === -1) {
+         setNextStopInfo({ name: 'Arrived', eta: '0 mins' });
+      }
+
       step += animationSpeed;
       if (step > 1) {
         step = 0; // Loop animation
@@ -70,7 +93,7 @@ export default function BusLiveLocationPage() {
 
     return () => clearInterval(interval);
 
-  }, [directions]);
+  }, [directions, routeStops, trip]);
   
   if (!currentTrip) {
       // Or show a proper "not found" page
@@ -99,7 +122,18 @@ export default function BusLiveLocationPage() {
         <Map 
             stops={routeStops} 
             busLocation={busLocation} 
-            onDirectionsChange={setDirections} 
+            onDirectionsChange={(res) => {
+              setDirections(res);
+              if (res && res.routes.length > 0) {
+                 const firstLeg = res.routes[0].legs[0];
+                 const firstStop = routeStops[1];
+                 const etaMinutes = Math.ceil((firstLeg.duration?.value || 0) / 60);
+                 setNextStopInfo({
+                    name: firstStop?.name || 'Destination',
+                    eta: `${etaMinutes} min${etaMinutes > 1 ? 's' : ''}`
+                 });
+              }
+            }}
         />
       </div>
 
@@ -111,9 +145,9 @@ export default function BusLiveLocationPage() {
                     <MapPin className="h-8 w-8 text-accent-foreground" />
                 </div>
                 <div>
-                    <p className="text-sm text-muted-foreground">Current Location</p>
-                    <h2 className="font-bold text-lg">{currentTrip.currentLocationName}</h2>
-                    <p className="text-sm text-primary font-semibold">ETA: {currentTrip.eta}</p>
+                    <p className="text-sm text-muted-foreground">Next Stop</p>
+                    <h2 className="font-bold text-lg">{nextStopInfo.name}</h2>
+                    <p className="text-sm text-primary font-semibold">ETA: {nextStopInfo.eta}</p>
                 </div>
               </div>
           </CardHeader>

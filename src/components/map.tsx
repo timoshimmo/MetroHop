@@ -25,13 +25,13 @@ interface MapProps {
 
 // IMPORTANT: Replace this with your actual Google Maps API key.
 // You can get one from the Google Cloud Console.
-const API_KEY = 'AIzaSyDdvxkcx9kamfF4kBQmcQfURxO7V_NdhnY';
+const API_KEY = 'YOUR_GOOGLE_MAPS_API_KEY_HERE';
 
 export function Map({ stops, busLocation, onDirectionsChange }: MapProps) {
   const { isLoaded, loadError } = useJsApiLoader({
     id: 'google-map-script',
     googleMapsApiKey: API_KEY,
-    libraries: ['geometry'],
+    libraries: ['geometry', 'routes'],
   });
 
   const [directions, setDirections] = useState<google.maps.DirectionsResult | null>(null);
@@ -75,12 +75,19 @@ export function Map({ stops, busLocation, onDirectionsChange }: MapProps) {
       },
       (result, status) => {
         if (status === window.google.maps.DirectionsStatus.OK && result) {
-          setDirections(result);
+          const newResult = {
+            ...result,
+            routes: result.routes.map(route => ({
+                ...route,
+                duration: route.legs.reduce((total, leg) => total + (leg.duration?.value || 0), 0)
+            }))
+          };
+          setDirections(newResult);
           if (onDirectionsChange) {
-            onDirectionsChange(result);
+            onDirectionsChange(newResult);
           }
         } else {
-          console.error(`error fetching directions ${result}`);
+          console.error(`error fetching directions ${status}`);
            if (onDirectionsChange) {
             onDirectionsChange(null);
           }
@@ -106,13 +113,9 @@ export function Map({ stops, busLocation, onDirectionsChange }: MapProps) {
 </svg>
 `;
     return {
-      url: `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(
-        svg
-          .replace('stroke="currentColor"', 'stroke="hsl(173 80% 40%)"')
-          .replace('<svg ', '<svg fill="hsl(210 20% 98%)" ')
-      )}`,
-      scaledSize: new window.google.maps.Size(40, 40),
-      anchor: new window.google.maps.Point(20, 20),
+      url: `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`,
+      scaledSize: new window.google.maps.Size(48, 48),
+      anchor: new window.google.maps.Point(24, 40),
     };
   }, [isLoaded]);
 
@@ -194,4 +197,13 @@ export function Map({ stops, busLocation, onDirectionsChange }: MapProps) {
       )}
     </GoogleMap>
   );
+}
+
+// Add a declaration for duration on the DirectionsRoute interface
+declare global {
+  namespace google.maps {
+    interface DirectionsRoute {
+      duration?: number;
+    }
+  }
 }

@@ -1,8 +1,8 @@
 
 'use client';
 
-import React from 'react';
-import { GoogleMap, useJsApiLoader, MarkerF, PolylineF } from '@react-google-maps/api';
+import React, { useState, useEffect } from 'react';
+import { GoogleMap, useJsApiLoader, MarkerF, DirectionsRenderer } from '@react-google-maps/api';
 
 const containerStyle = {
   width: '100%',
@@ -32,15 +32,13 @@ export function Map({ stops, busLocation }: MapProps) {
     googleMapsApiKey: API_KEY,
   });
 
-  const path = React.useMemo(
-    () =>
-      stops
-        .filter((stop) => stop.lat && stop.lng)
-        .map((stop) => ({ lat: stop.lat!, lng: stop.lng! })),
-    [stops]
-  );
-  
+  const [directions, setDirections] = useState<google.maps.DirectionsResult | null>(null);
+
   const center = React.useMemo(() => {
+    const path = stops
+      .filter((stop) => stop.lat && stop.lng)
+      .map((stop) => ({ lat: stop.lat!, lng: stop.lng! }));
+      
     if (path.length > 0) {
       const avgLat = path.reduce((sum, point) => sum + point.lat, 0) / path.length;
       const avgLng = path.reduce((sum, point) => sum + point.lng, 0) / path.length;
@@ -48,7 +46,41 @@ export function Map({ stops, busLocation }: MapProps) {
     }
     // Default center if no stops or no coords
     return { lat: 6.45, lng: 3.55 };
-  }, [path]);
+  }, [stops]);
+
+  useEffect(() => {
+    if (!isLoaded || stops.length < 2) return;
+
+    const validStops = stops.filter(stop => stop.lat && stop.lng);
+    if (validStops.length < 2) return;
+
+    const directionsService = new window.google.maps.DirectionsService();
+
+    const origin = { lat: validStops[0].lat!, lng: validStops[0].lng! };
+    const destination = { lat: validStops[validStops.length - 1].lat!, lng: validStops[validStops.length - 1].lng! };
+    
+    const waypoints = validStops.slice(1, -1).map(stop => ({
+      location: { lat: stop.lat!, lng: stop.lng! },
+      stopover: true,
+    }));
+
+    directionsService.route(
+      {
+        origin: origin,
+        destination: destination,
+        waypoints: waypoints,
+        travelMode: window.google.maps.TravelMode.DRIVING,
+      },
+      (result, status) => {
+        if (status === window.google.maps.DirectionsStatus.OK && result) {
+          setDirections(result);
+        } else {
+          console.error(`error fetching directions ${result}`);
+        }
+      }
+    );
+  }, [isLoaded, stops]);
+
 
   const busIcon = React.useMemo(() => {
     if (!isLoaded) return undefined;
@@ -99,6 +131,19 @@ export function Map({ stops, busLocation }: MapProps) {
         zoomControl: true,
       }}
     >
+      {directions && (
+        <DirectionsRenderer
+          directions={directions}
+          options={{
+            suppressMarkers: true,
+            polylineOptions: {
+              strokeColor: 'hsl(173 80% 40%)', // primary color
+              strokeOpacity: 0.9,
+              strokeWeight: 5,
+            },
+          }}
+        />
+      )}
       {stops.map((stop) =>
         stop.lat && stop.lng ? (
           <MarkerF
@@ -125,16 +170,6 @@ export function Map({ stops, busLocation }: MapProps) {
             title="Current Bus Location"
             icon={busIcon}
             zIndex={100}
-        />
-      )}
-       {path.length > 1 && (
-        <PolylineF
-          path={path}
-          options={{
-            strokeColor: '#20CC8A', // Corresponds to primary color hsl(173, 80%, 40%)
-            strokeOpacity: 0.9,
-            strokeWeight: 5,
-          }}
         />
       )}
     </GoogleMap>

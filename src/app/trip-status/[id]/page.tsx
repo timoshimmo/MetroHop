@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useParams } from 'next/navigation';
@@ -36,6 +37,7 @@ export default function TripStatusPage() {
           name: 'Sajen Kenectus',
           avatarUrl: 'https://placehold.co/100x100.png',
         },
+        price: trip.price
       }
   }, [trip]);
 
@@ -85,7 +87,7 @@ export default function TripStatusPage() {
         <Button variant="ghost" size="icon" onClick={() => router.back()}>
           <ArrowLeft className="h-6 w-6" />
         </Button>
-        <h1 className="text-xl font-bold font-headline">Live Location</h1>
+        <h1 className="text-xl font-bold font-headline">Trip Details</h1>
       </header>
 
       <div className="relative w-full h-1/2 bg-muted z-10">
@@ -140,6 +142,14 @@ export default function TripStatusPage() {
           </CardContent>
         </Card>
       </main>
+      <footer className="p-4 border-t bg-background sticky bottom-0 z-10">
+        {currentTrip.price > 0 && (
+            <div className="flex justify-between items-center">
+                <span className="text-lg font-medium text-muted-foreground">Total Payment</span>
+                <span className="text-2xl font-bold text-primary">₦{currentTrip.price.toLocaleString()}</span>
+            </div>
+        )}
+      </footer>
     </div>
   );
 }

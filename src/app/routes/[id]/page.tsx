@@ -137,13 +137,6 @@ export default function RouteDetailsPage({ params }: { params: { id: string } })
                       </div>
                   </div>
                 )}
-                 <div className="flex items-center gap-2">
-                    <Bus className="h-5 w-5 text-muted-foreground" />
-                    <div>
-                        <p className="text-muted-foreground">Bus No.</p>
-                        <p className="font-semibold">{route.busNumber}</p>
-                    </div>
-                </div>
             </div>
           </CardContent>
         </Card>

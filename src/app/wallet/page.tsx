@@ -1,7 +1,7 @@
 
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { ArrowLeft, Plus, CreditCard, Landmark } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -17,6 +17,12 @@ const recentTransactions = [
 ]
 
 export default function WalletPage() {
+  const [topUpAmount, setTopUpAmount] = useState('');
+
+  const handleAmountButtonClick = (amount: number) => {
+    setTopUpAmount(amount.toString());
+  };
+
   return (
     <div className="flex flex-col h-full bg-muted/30">
       <header className="p-4 flex items-center gap-4 border-b bg-background sticky top-0 z-10">
@@ -43,17 +49,25 @@ export default function WalletPage() {
             <CardContent className="space-y-4">
                 <div className="relative">
                     <span className="absolute left-3 top-1/2 -translate-y-1/2 font-bold text-muted-foreground">₦</span>
-                    <Input type="number" placeholder="Enter amount" className="pl-8 h-12 text-lg font-bold"/>
+                    <Input 
+                        type="number" 
+                        placeholder="Enter amount" 
+                        className="pl-8 h-12 text-lg font-bold"
+                        value={topUpAmount}
+                        onChange={(e) => setTopUpAmount(e.target.value)}
+                    />
                 </div>
                  <div className="flex items-center gap-2">
-                    <Button variant="outline" className="flex-1">₦1,000</Button>
-                    <Button variant="outline" className="flex-1">₦2,000</Button>
-                    <Button variant="outline" className="flex-1">₦5,000</Button>
+                    <Button variant="outline" className="flex-1" onClick={() => handleAmountButtonClick(1000)}>₦1,000</Button>
+                    <Button variant="outline" className="flex-1" onClick={() => handleAmountButtonClick(2000)}>₦2,000</Button>
+                    <Button variant="outline" className="flex-1" onClick={() => handleAmountButtonClick(5000)}>₦5,000</Button>
                 </div>
-                <Button size="lg" className="w-full h-12">
-                    <Plus className="mr-2 h-5 w-5" />
-                    Proceed to Top-up
-                </Button>
+                <Link href={`/payment?price=${topUpAmount || 0}`} className="w-full">
+                    <Button size="lg" className="w-full h-12" disabled={!topUpAmount || parseInt(topUpAmount) <= 0}>
+                        <Plus className="mr-2 h-5 w-5" />
+                        Proceed to Top-up
+                    </Button>
+                </Link>
             </CardContent>
         </Card>
 

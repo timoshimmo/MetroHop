@@ -25,7 +25,7 @@ interface MapProps {
 
 // IMPORTANT: Replace this with your actual Google Maps API key.
 // You can get one from the Google Cloud Console.
-const API_KEY = 'YOUR_GOOGLE_MAPS_API_KEY_HERE';
+const API_KEY = 'AIzaSyDdvxkcx9kamfF4kBQmcQfURxO7V_NdhnY';
 
 export function Map({ stops, busLocation, onDirectionsChange }: MapProps) {
   const { isLoaded, loadError } = useJsApiLoader({

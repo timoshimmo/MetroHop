@@ -21,7 +21,7 @@ export default function BusLiveLocationPage() {
   const trip = useMemo(() => myTickets.find(t => t.status === 'Active'), []);
 
   const [busLocation, setBusLocation] = useState({ lat: 6.447, lng: 3.473 });
-  const [directions, setDirections] = useState<google.maps.DirectionsResult | null>(null);
+  const [directions, setDirections] = useState<google.maps.DirectionsResult & { duration?: number } | null>(null);
   const [nextStopInfo, setNextStopInfo] = useState<{ name: string, eta: string }>({ name: 'Loading...', eta: '...' });
 
   const routeStops = useMemo(() => {
@@ -45,7 +45,7 @@ export default function BusLiveLocationPage() {
 
 
   useEffect(() => {
-    if (!directions || !routeStops.length) return;
+    if (!directions || !routeStops.length || !directions.routes[0]) return;
 
     const path = directions.routes[0].overview_path;
     const legs = directions.routes[0].legs;
@@ -53,9 +53,14 @@ export default function BusLiveLocationPage() {
     if (path.length < 2) return;
     
     let step = 0;
-    const animationSpeed = 0.005;
+    // Speed is determined by how much we increment `step` in each interval.
+    // Total duration of trip is in `directions.duration`.
+    // Interval is 2000ms (2s). Total steps needed is duration / 2.
+    // So, animationSpeed should be 2 / directions.duration.
+    const animationSpeed = directions.duration ? 2 / directions.duration : 0.0005;
 
     const interval = setInterval(() => {
+      // Calculate new bus location
       const pointIndex = Math.floor(step * (path.length - 1));
       const newLocation = path[pointIndex];
       
@@ -63,13 +68,17 @@ export default function BusLiveLocationPage() {
         setBusLocation({ lat: newLocation.lat(), lng: newLocation.lng() });
       }
 
+      // Calculate next stop and ETA
       let cumulativeDuration = 0;
       let nextStopIndex = -1;
       
       for(let i = 0; i < legs.length; i++) {
         const legDuration = legs[i].duration?.value ?? 0;
+        // Check if the current time elapsed (step * total_duration) is less than the time to reach the end of this leg
         if (step * directions.duration! < cumulativeDuration + legDuration) {
-          nextStopIndex = i + 1;
+          // This leg is the current one, so the next stop is the end of this leg.
+          // In our setup, waypoints start from index 1 of routeStops.
+          nextStopIndex = i + 1; 
           const timeToNextStop = (cumulativeDuration + legDuration) - (step * directions.duration!);
           const etaMinutes = Math.ceil(timeToNextStop / 60);
           setNextStopInfo({
@@ -81,13 +90,14 @@ export default function BusLiveLocationPage() {
         cumulativeDuration += legDuration;
       }
       
-      if (nextStopIndex === -1) {
+      if (nextStopIndex === -1) { // If loop finishes, we are past the last leg
          setNextStopInfo({ name: 'Arrived', eta: '0 mins' });
       }
 
       step += animationSpeed;
       if (step > 1) {
         step = 0; // Loop animation
+        setBusLocation({ lat: path[0].lat(), lng: path[0].lng() }); // Reset bus to start
       }
     }, 2000);
 
@@ -124,9 +134,9 @@ export default function BusLiveLocationPage() {
             busLocation={busLocation} 
             onDirectionsChange={(res) => {
               setDirections(res);
-              if (res && res.routes.length > 0) {
+              if (res && res.routes.length > 0 && res.routes[0].legs.length > 0) {
                  const firstLeg = res.routes[0].legs[0];
-                 const firstStop = routeStops[1];
+                 const firstStop = routeStops[1]; // The first stop is the destination of the first leg
                  const etaMinutes = Math.ceil((firstLeg.duration?.value || 0) / 60);
                  setNextStopInfo({
                     name: firstStop?.name || 'Destination',

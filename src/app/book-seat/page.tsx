@@ -40,7 +40,7 @@ export default function BookSeatPage() {
       </header>
 
       <div className="relative w-full h-1/2 bg-muted">
-        <Map stops={stops.slice(0, 2)} />
+        <Map stops={stops} />
       </div>
 
       <main className="flex-1 overflow-y-auto p-4">

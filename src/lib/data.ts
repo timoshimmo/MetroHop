@@ -154,7 +154,7 @@ export const myTickets: Trip[] = [
     departureTime: '06:12',
     arrivalTime: '07:30',
     price: 500,
-    busNumber: 'LK-AJ-SH',
+    busNumber: 'LK-AJ-01',
     status: 'Active',
     category: 'Local'
   },

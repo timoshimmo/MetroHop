@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { ArrowLeft, Minus, Plus, CalendarDays, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -23,12 +23,43 @@ export default function BookSeatPage() {
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [time, setTime] = useState<string | undefined>('09:00 AM');
   const [passengers, setPassengers] = useState(1);
+  
+  const [busLocation, setBusLocation] = useState({ lat: 6.447, lng: 3.473 });
+  const [directions, setDirections] = useState<google.maps.DirectionsResult | null>(null);
 
   const handlePassengerChange = (amount: number) => {
     setPassengers((prev) => Math.max(1, prev + amount));
   };
 
   const totalPrice = basePrice * passengers;
+
+  useEffect(() => {
+    if (!directions || !directions.routes[0]) return;
+
+    const path = directions.routes[0].overview_path;
+
+    if (path.length < 2) return;
+    
+    let step = 0;
+    const animationSpeed = 0.001; // Controls speed of marker
+
+    const interval = setInterval(() => {
+      const pointIndex = Math.floor(step * (path.length -1));
+      const newLocation = path[pointIndex];
+      
+      if (newLocation) {
+        setBusLocation({ lat: newLocation.lat(), lng: newLocation.lng() });
+      }
+
+      step += animationSpeed;
+      if (step > 1) {
+        step = 0; // Loop animation
+      }
+    }, 100); // Update every 100ms for smoother animation
+
+    return () => clearInterval(interval);
+
+  }, [directions]);
 
   return (
     <div className="flex flex-col h-full bg-muted/30">
@@ -40,7 +71,11 @@ export default function BookSeatPage() {
       </header>
 
       <div className="relative w-full h-1/2 bg-muted">
-        <Map stops={stops} />
+        <Map 
+            stops={stops} 
+            busLocation={busLocation} 
+            onDirectionsChange={setDirections}
+        />
       </div>
 
       <main className="flex-1 overflow-y-auto p-4">

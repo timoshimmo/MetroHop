@@ -1,5 +1,6 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import { ArrowLeft, ArrowRight, Banknote, Bus, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -13,11 +14,43 @@ export default function RouteDetailsPage({ params }: { params: { id: string } })
   const combinedRoutes = [...allRoutes, ...localRoutes];
   const route = combinedRoutes.find((r) => r.id === params.id);
 
+  const [busLocation, setBusLocation] = useState({ lat: 6.447, lng: 3.473 });
+  const [directions, setDirections] = useState<google.maps.DirectionsResult | null>(null);
+
   if (!route) {
     notFound();
   }
 
   const routeStops = stops.filter(stop => stop.routes.includes(route.busNumber));
+  
+  useEffect(() => {
+    if (!directions || !directions.routes[0]) return;
+
+    const path = directions.routes[0].overview_path;
+
+    if (path.length < 2) return;
+    
+    let step = 0;
+    const animationSpeed = 0.001; // Controls speed of marker
+
+    const interval = setInterval(() => {
+      const pointIndex = Math.floor(step * (path.length -1));
+      const newLocation = path[pointIndex];
+      
+      if (newLocation) {
+        setBusLocation({ lat: newLocation.lat(), lng: newLocation.lng() });
+      }
+
+      step += animationSpeed;
+      if (step > 1) {
+        step = 0; // Loop animation
+      }
+    }, 100); // Update every 100ms for smoother animation
+
+    return () => clearInterval(interval);
+
+  }, [directions]);
+
 
   return (
     <div className="flex flex-col h-full bg-muted/30">
@@ -32,7 +65,11 @@ export default function RouteDetailsPage({ params }: { params: { id: string } })
 
       <div className="relative w-full h-64 bg-muted">
         {routeStops.length > 0 ? (
-          <Map stops={routeStops} />
+          <Map 
+            stops={routeStops} 
+            busLocation={busLocation} 
+            onDirectionsChange={setDirections}
+          />
         ) : (
           <div className="w-full h-full flex items-center justify-center">
             <p className="text-muted-foreground text-sm">No bus stops listed for this route.</p>

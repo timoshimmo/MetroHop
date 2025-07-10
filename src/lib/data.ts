@@ -193,11 +193,11 @@ export const locations: Location[] = [
 ];
 
 export const stops: Stop[] = [
-    { id: 'stop1', name: 'Lekki Phase 1 Gate', routes: ['LK-AJ-01', 'LK-CH-02', 'AJ-LK-04'], lat: 6.447, lng: 3.473 },
-    { id: 'stop2', name: 'Ikate Junction', routes: ['LK-AJ-01', 'IK-VGC-03'], lat: 6.43, lng: 3.50 },
-    { id: 'stop3', name: 'Chevron Bus Stop', routes: ['LK-AJ-01', 'LK-CH-02', 'VGC-CH-05'], lat: 6.43, lng: 3.52 },
-    { id: 'stop4', name: 'VGC Gate', routes: ['IK-VGC-03', 'VGC-CH-05'], lat: 6.44, lng: 3.56 },
-    { id: 'stop5', name: 'Ajah Terminus', routes: ['LK-AJ-01', 'AJ-LK-04'], lat: 6.46, lng: 3.59 },
+    { id: 'stop1', name: 'Lekki Phase 1 Gate', address: 'Admiralty Way, Lekki', routes: ['LK-AJ-01', 'LK-CH-02', 'AJ-LK-04'], lat: 6.447, lng: 3.473 },
+    { id: 'stop2', name: 'Ikate Junction', address: 'Ikate, by Elegushi Beach Road', routes: ['LK-AJ-01', 'IK-VGC-03'], lat: 6.43, lng: 3.50 },
+    { id: 'stop3', name: 'Chevron Bus Stop', address: 'By Chevron Tollgate, Lekki-Epe Expressway', routes: ['LK-AJ-01', 'LK-CH-02', 'VGC-CH-05'], lat: 6.43, lng: 3.52 },
+    { id: 'stop4', name: 'VGC Gate', address: 'Main Gate, Victoria Garden City', routes: ['IK-VGC-03', 'VGC-CH-05'], lat: 6.44, lng: 3.56 },
+    { id: 'stop5', name: 'Ajah Terminus', address: 'Under Jubilee Bridge, Ajah', routes: ['LK-AJ-01', 'AJ-LK-04'], lat: 6.46, lng: 3.59 },
 ];
 
 export const promos: Promo[] = [

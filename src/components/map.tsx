@@ -2,7 +2,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { GoogleMap, useJsApiLoader, MarkerF, DirectionsRenderer } from '@react-google-maps/api';
+import { GoogleMap, useJsApiLoader, MarkerF, DirectionsRenderer, InfoWindowF } from '@react-google-maps/api';
 
 const containerStyle = {
   width: '100%',
@@ -13,6 +13,7 @@ interface MapProps {
   stops: {
     id: string;
     name: string;
+    address: string;
     lat?: number;
     lng?: number;
   }[];
@@ -35,6 +36,7 @@ export function Map({ stops, busLocation, onDirectionsChange }: MapProps) {
   });
 
   const [directions, setDirections] = useState<google.maps.DirectionsResult | null>(null);
+  const [selectedStop, setSelectedStop] = useState<string | null>(null);
 
   const center = React.useMemo(() => {
     const path = stops
@@ -153,6 +155,7 @@ export function Map({ stops, busLocation, onDirectionsChange }: MapProps) {
         disableDefaultUI: true,
         zoomControl: true,
       }}
+      onClick={() => setSelectedStop(null)}
     >
       {directions && (
         <DirectionsRenderer
@@ -173,6 +176,7 @@ export function Map({ stops, busLocation, onDirectionsChange }: MapProps) {
             key={stop.id}
             position={{ lat: stop.lat, lng: stop.lng }}
             title={stop.name}
+             onClick={() => setSelectedStop(stop.id)}
              options={{
               icon: {
                 path: window.google.maps.SymbolPath.CIRCLE,
@@ -183,7 +187,19 @@ export function Map({ stops, busLocation, onDirectionsChange }: MapProps) {
                 strokeColor: 'hsl(210 20% 98%)',
               }
             }}
-          />
+          >
+           {selectedStop === stop.id && (
+              <InfoWindowF
+                onCloseClick={() => setSelectedStop(null)}
+                position={{ lat: stop.lat, lng: stop.lng }}
+              >
+                <div>
+                  <h4 className="font-bold text-sm text-foreground">{stop.name}</h4>
+                  <p className="text-xs text-muted-foreground">{stop.address}</p>
+                </div>
+              </InfoWindowF>
+            )}
+          </MarkerF>
         ) : null
       )}
       {busLocation && busIcon && (

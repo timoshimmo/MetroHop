@@ -20,6 +20,7 @@ export interface Location {
 export interface Stop {
   id: string;
   name: string;
+  address: string;
   routes: string[];
   lat?: number;
   lng?: number;

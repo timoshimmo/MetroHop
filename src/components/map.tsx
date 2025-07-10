@@ -84,7 +84,7 @@ export function Map({ stops, busLocation, onDirectionsChange }: MapProps) {
           };
           setDirections(newResult);
           if (onDirectionsChange) {
-            onDirectionsChange(newResult);
+            onDirectionsChange(newResult as any);
           }
         } else {
           console.error(`error fetching directions ${status}`);

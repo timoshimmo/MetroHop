@@ -41,7 +41,7 @@ export default function BookSeatPage() {
     if (path.length < 2) return;
     
     let step = 0;
-    const animationSpeed = 0.001; // Controls speed of marker
+    const animationSpeed = 0.005; // Controls speed of marker
 
     const interval = setInterval(() => {
       const pointIndex = Math.floor(step * (path.length -1));
@@ -55,7 +55,7 @@ export default function BookSeatPage() {
       if (step > 1) {
         step = 0; // Loop animation
       }
-    }, 100); // Update every 100ms for smoother animation
+    }, 1000); // Update every 100ms for smoother animation
 
     return () => clearInterval(interval);
 

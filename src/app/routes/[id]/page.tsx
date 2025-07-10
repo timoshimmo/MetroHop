@@ -31,7 +31,7 @@ export default function RouteDetailsPage({ params }: { params: { id: string } })
     if (path.length < 2) return;
     
     let step = 0;
-    const animationSpeed = 0.001; // Controls speed of marker
+    const animationSpeed = 0.005; // Controls speed of marker
 
     const interval = setInterval(() => {
       // Ensure step loops back to 0
@@ -47,7 +47,7 @@ export default function RouteDetailsPage({ params }: { params: { id: string } })
         setBusLocation({ lat: newLocation.lat(), lng: newLocation.lng() });
       }
 
-    }, 100); // Update every 100ms for smoother animation
+    }, 1000); // Update every 100ms for smoother animation
 
     return () => clearInterval(interval);
 
@@ -68,7 +68,7 @@ export default function RouteDetailsPage({ params }: { params: { id: string } })
       <div className="relative w-full h-1/2 bg-muted">
         {routeStops.length > 0 ? (
           <Map 
-            stops={routeStops} 
+            stops={stops} 
             busLocation={busLocation} 
             onDirectionsChange={setDirections}
           />

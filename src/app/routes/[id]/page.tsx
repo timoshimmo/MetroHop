@@ -35,7 +35,10 @@ export default function RouteDetailsPage({ params }: { params: { id: string } })
 
     const interval = setInterval(() => {
       // Ensure step loops back to 0
-      step = (step + animationSpeed) % 1;
+      step = (step + animationSpeed);
+      if (step > 1) {
+        step = 0;
+      }
       
       const pointIndex = Math.floor(step * (path.length -1));
       const newLocation = path[pointIndex];
@@ -62,7 +65,7 @@ export default function RouteDetailsPage({ params }: { params: { id: string } })
         <h1 className="text-xl font-bold font-headline truncate">{route.name}</h1>
       </header>
 
-      <div className="relative w-full h-64 bg-muted">
+      <div className="relative w-full h-1/2 bg-muted">
         {routeStops.length > 0 ? (
           <Map 
             stops={routeStops} 

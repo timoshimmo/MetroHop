@@ -10,6 +10,7 @@ export interface Trip {
   status?: 'Completed' | 'Upcoming' | 'Ongoing' | 'Active';
   category?: 'Intercity' | 'Local';
   seatsAvailable?: number;
+  routeNumber?: string;
 }
 
 export interface Location {

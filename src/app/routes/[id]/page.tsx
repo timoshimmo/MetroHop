@@ -2,7 +2,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { ArrowLeft, ArrowRight, Banknote, Bus, Clock, Armchair } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Banknote, Bus, Clock, Armchair, Route } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
@@ -115,10 +115,10 @@ export default function RouteDetailsPage({ params }: { params: { id: string } })
                     </div>
                 </div>
                 <div className="flex items-center gap-2">
-                    <Bus className="h-5 w-5 text-muted-foreground" />
+                    <Route className="h-5 w-5 text-muted-foreground" />
                     <div>
-                        <p className="text-muted-foreground">Bus No.</p>
-                        <p className="font-semibold">{route.busNumber}</p>
+                        <p className="text-muted-foreground">Route No.</p>
+                        <p className="font-semibold">{route.routeNumber}</p>
                     </div>
                 </div>
                  <div className="flex items-center gap-2">
@@ -137,6 +137,13 @@ export default function RouteDetailsPage({ params }: { params: { id: string } })
                       </div>
                   </div>
                 )}
+                 <div className="flex items-center gap-2">
+                    <Bus className="h-5 w-5 text-muted-foreground" />
+                    <div>
+                        <p className="text-muted-foreground">Bus No.</p>
+                        <p className="font-semibold">{route.busNumber}</p>
+                    </div>
+                </div>
             </div>
           </CardContent>
         </Card>

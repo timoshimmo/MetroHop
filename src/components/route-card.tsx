@@ -16,12 +16,13 @@ export function RouteCard({ trip, showStatus = false }: RouteCardProps) {
       <Card className="overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
         <CardHeader className="p-4">
           <div className="flex justify-between items-start">
-            <div>
-              <h3 className="font-bold text-lg font-headline">{trip.name}</h3>
-              <p className="text-sm text-muted-foreground flex items-center gap-2">
-                <Bus className="h-4 w-4" />
-                Bus No: {trip.busNumber}
-              </p>
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-muted rounded-full">
+                <Bus className="h-5 w-5 text-muted-foreground" />
+              </div>
+              <div>
+                <h3 className="font-bold text-lg font-headline">{trip.name}</h3>
+              </div>
             </div>
             {showStatus && <Badge variant={trip.status === 'Completed' ? 'secondary' : 'default'}>{trip.status}</Badge>}
           </div>

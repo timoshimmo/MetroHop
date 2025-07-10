@@ -17,6 +17,7 @@ export default function BusLiveLocationPage() {
   const price = priceParam ? parseInt(priceParam, 10) : 0;
 
   const [busLocation, setBusLocation] = useState({ lat: 6.447, lng: 3.473 });
+  const [directions, setDirections] = useState<google.maps.DirectionsResult | null>(null);
 
   const currentTrip = useMemo(() => ({
     busNumber: 'CH-IK-01',
@@ -29,71 +30,35 @@ export default function BusLiveLocationPage() {
     eta: "5 mins"
   }), []);
 
-  const routePath = useMemo(() => stops
-    .filter(stop => stop.lat && stop.lng)
-    .map(stop => ({ lat: stop.lat!, lng: stop.lng! })), 
-  []);
-
-  const getPointAlongPath = useCallback((path: google.maps.LatLngLiteral[], progress: number): google.maps.LatLngLiteral | null => {
-    const totalDistance = path.reduce((acc, point, i) => {
-        if (i === 0) return 0;
-        const prev = path[i-1];
-        return acc + google.maps.geometry.spherical.computeDistanceBetween(
-            new google.maps.LatLng(prev),
-            new google.maps.LatLng(point)
-        );
-    }, 0);
-
-    let distanceCovered = progress * totalDistance;
-
-    for (let i = 0; i < path.length - 1; i++) {
-        const start = path[i];
-        const end = path[i + 1];
-        const segmentDistance = google.maps.geometry.spherical.computeDistanceBetween(
-            new google.maps.LatLng(start),
-            new google.maps.LatLng(end)
-        );
-
-        if (distanceCovered <= segmentDistance) {
-            const fraction = distanceCovered / segmentDistance;
-            const lat = start.lat + (end.lat - start.lat) * fraction;
-            const lng = start.lng + (end.lng - start.lng) * fraction;
-            return { lat, lng };
-        }
-        distanceCovered -= segmentDistance;
-    }
-
-    return path.length > 0 ? path[path.length - 1] : null;
-}, []);
-
-
+  const routeStops = useMemo(() => stops.slice(0, 2), []);
+  
   useEffect(() => {
-    // Animate bus along the route path
-    if (routePath.length < 2) return;
+    if (!directions) return;
 
-    let step = 0;
-    const animationSpeed = 0.005; // Adjust for slower or faster animation
+    const path = directions.routes[0].overview_path.map(p => ({ lat: p.lat(), lng: p.lng() }));
+    if (path.length < 2) return;
     
+    let step = 0;
+    const animationSpeed = 0.01; // Adjust for slower or faster animation
+
     const interval = setInterval(() => {
-        if (typeof window.google === 'undefined' || !window.google.maps.geometry) {
-            // Google Maps API not loaded yet, wait.
-            return;
-        }
-
-        const newLocation = getPointAlongPath(routePath, step);
-        if(newLocation){
-             setBusLocation(newLocation);
-        }
-
+      const pointIndex = Math.floor(step * (path.length - 1));
+      const newLocation = path[pointIndex];
+      
+      if (newLocation) {
+        setBusLocation(newLocation);
+      }
+      
       step += animationSpeed;
       if (step > 1) {
         step = 0; // Loop animation
       }
-
-    }, 200); // Update every 200ms for smoother animation
+    }, 200);
 
     return () => clearInterval(interval);
-  }, [routePath, getPointAlongPath]);
+
+  }, [directions]);
+
 
   return (
     <div className="flex flex-col h-full bg-muted/30">
@@ -107,7 +72,11 @@ export default function BusLiveLocationPage() {
       </header>
 
       <div className="relative w-full h-1/2 bg-muted z-10">
-        <Map stops={stops} busLocation={busLocation} />
+        <Map 
+            stops={routeStops} 
+            busLocation={busLocation} 
+            onDirectionsChange={setDirections} 
+        />
       </div>
 
       <main className="flex-1 overflow-y-auto bg-background">

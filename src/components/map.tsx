@@ -20,13 +20,14 @@ interface MapProps {
     lat: number;
     lng: number;
   };
+  onDirectionsChange?: (directions: google.maps.DirectionsResult | null) => void;
 }
 
 // IMPORTANT: Replace this with your actual Google Maps API key.
 // You can get one from the Google Cloud Console.
-const API_KEY = 'YOUR_GOOGLE_MAPS_API_KEY_HERE';
+const API_KEY = 'AIzaSyDdvxkcx9kamfF4kBQmcQfURxO7V_NdhnY';
 
-export function Map({ stops, busLocation }: MapProps) {
+export function Map({ stops, busLocation, onDirectionsChange }: MapProps) {
   const { isLoaded, loadError } = useJsApiLoader({
     id: 'google-map-script',
     googleMapsApiKey: API_KEY,
@@ -75,12 +76,18 @@ export function Map({ stops, busLocation }: MapProps) {
       (result, status) => {
         if (status === window.google.maps.DirectionsStatus.OK && result) {
           setDirections(result);
+          if (onDirectionsChange) {
+            onDirectionsChange(result);
+          }
         } else {
           console.error(`error fetching directions ${result}`);
+           if (onDirectionsChange) {
+            onDirectionsChange(null);
+          }
         }
       }
     );
-  }, [isLoaded, stops]);
+  }, [isLoaded, stops, onDirectionsChange]);
 
 
   const busIcon = React.useMemo(() => {

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { ArrowLeft, Minus, Plus, CalendarDays, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -160,7 +160,7 @@ export default function BookSeatPage() {
         {basePrice > 0 && (
           <div className="flex justify-between items-center mb-4">
             <span className="text-lg font-medium text-muted-foreground">Total Payment</span>
-            <span className="text-2xl font-bold text-primary">₦{totalPrice.toLocaleString()}</span>
+            <Suspense><span className="text-2xl font-bold text-primary">₦{totalPrice.toLocaleString()}</span></Suspense>
           </div>
         )}
         <Link href={`/bus-live-location?price=${totalPrice}`} className="w-full">

@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { MobileLayout } from '@/components/mobile-layout';
-import { Suspense } from 'react';
 
 export const metadata: Metadata = {
   title: 'MetroHop',
@@ -23,9 +22,7 @@ export default function RootLayout({
       </head>
       <body className="font-body antialiased" suppressHydrationWarning>
         <MobileLayout>
-          <Suspense>
             {children}
-          </Suspense>
         </MobileLayout>
       </body>
     </html>

@@ -19,7 +19,9 @@ import { cn } from '@/lib/utils';
 
 export default function BookSeatPage() {
   const router = useRouter();
- 
+  const searchParams = useSearchParams();
+  const priceParam = searchParams.get('price');
+  const basePrice = priceParam ? parseInt(priceParam, 10) : 0;
 
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [time, setTime] = useState<string | undefined>('09:00 AM');
@@ -32,31 +34,7 @@ export default function BookSeatPage() {
     setPassengers((prev) => Math.max(1, prev + amount));
   };
 
-  const FooterArea = () => {
-
-    const searchParams = useSearchParams();
-    const priceParam = searchParams.get('price');
-    const basePrice = priceParam ? parseInt(priceParam, 10) : 0;
-
-    const totalPrice = basePrice * passengers;
-
-    return  <footer className="p-4 border-t bg-background sticky bottom-0 z-10">
-      {basePrice > 0 && (
-      <div className="flex justify-between items-center mb-4">
-        <span className="text-lg font-medium text-muted-foreground">Total Payment</span>
-        <span className="text-2xl font-bold text-primary">₦{totalPrice.toLocaleString()}</span>
-      </div>
-    )}
-  
-      <Link href={`/bus-live-location?price=${totalPrice}`} className="w-full">
-        <Button size="lg" className="w-full h-14 text-lg font-bold">
-          Find a bus
-        </Button>
-      </Link>
-   
-  </footer>
-
-  }
+  const totalPrice = basePrice * passengers;
 
   useEffect(() => {
     if (!directions || !directions.routes[0]) return;
@@ -180,10 +158,21 @@ export default function BookSeatPage() {
           </Card>
         </div>
       </main>
-      <Suspense>
-        <FooterArea />
-     </Suspense>
-     
+      
+      <footer className="p-4 border-t bg-background sticky bottom-0 z-10">
+        {basePrice > 0 && (
+          <div className="flex justify-between items-center mb-4">
+            <span className="text-lg font-medium text-muted-foreground">Total Payment</span>
+            <span className="text-2xl font-bold text-primary">₦{totalPrice.toLocaleString()}</span>
+          </div>
+        )}
+      
+          <Link href={`/bus-live-location?price=${totalPrice}`} className="w-full">
+            <Button size="lg" className="w-full h-14 text-lg font-bold">
+              Find a bus
+            </Button>
+          </Link>
+      </footer>
     </div>
   );
 }

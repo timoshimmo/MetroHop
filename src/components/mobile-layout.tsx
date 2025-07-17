@@ -2,6 +2,7 @@
 
 import { BottomNav } from './bottom-nav';
 import { usePathname } from 'next/navigation';
+import { Suspense } from 'react'
 
 export function MobileLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -14,7 +15,9 @@ export function MobileLayout({ children }: { children: React.ReactNode }) {
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-40 h-6 bg-black dark:bg-gray-800 rounded-b-xl z-20"></div>
         <div className="h-full flex flex-col">
           <div className="flex-1 overflow-hidden">
-            {children}
+            <Suspense>
+              {children}
+            </Suspense>
           </div>
           {showBottomNav && <BottomNav />}
         </div>

@@ -157,18 +157,19 @@ export default function BookSeatPage() {
       </main>
       
       <footer className="p-4 border-t bg-background sticky bottom-0 z-10">
-        {basePrice > 0 && (
-          <div className="flex justify-between items-center mb-4">
-            <span className="text-lg font-medium text-muted-foreground">Total Payment</span>
-            <Suspense><span className="text-2xl font-bold text-primary">₦{totalPrice.toLocaleString()}</span></Suspense>
-          </div>
-        )}
         <Suspense>
-          <Link href={`/bus-live-location?price=${totalPrice}`} className="w-full">
-            <Button size="lg" className="w-full h-14 text-lg font-bold">
-              Find a bus
-            </Button>
-          </Link>
+          {basePrice > 0 && (
+            <div className="flex justify-between items-center mb-4">
+              <span className="text-lg font-medium text-muted-foreground">Total Payment</span>
+              <span className="text-2xl font-bold text-primary">₦{totalPrice.toLocaleString()}</span>
+            </div>
+          )}
+        
+            <Link href={`/bus-live-location?price=${totalPrice}`} className="w-full">
+              <Button size="lg" className="w-full h-14 text-lg font-bold">
+                Find a bus
+              </Button>
+            </Link>
         </Suspense>
       </footer>
     </div>

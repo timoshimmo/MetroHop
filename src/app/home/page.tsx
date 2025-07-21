@@ -97,24 +97,25 @@ export default function HomePage() {
             <Link href="/history" className="text-sm text-primary font-semibold">See All</Link>
           </div>
            <Card className="shadow-md">
-            <CardContent className="p-4 space-y-4">
-              {recentHistory.map((trip, index) => (
-                <React.Fragment key={trip.id}>
-                  <div className="flex items-center justify-between text-sm">
-                    <div className="flex items-center gap-3">
-                      <div className="p-2 bg-muted rounded-full">
-                        <Bus className="h-5 w-5 text-muted-foreground" />
+            <CardContent className="p-0">
+              <div className="divide-y">
+                {recentHistory.map((trip) => (
+                  <Link href={`/trip-status/${trip.id}`} key={trip.id} className="block hover:bg-muted/50 transition-colors">
+                    <div className="flex items-center justify-between text-sm p-4">
+                      <div className="flex items-center gap-3">
+                        <div className="p-2 bg-muted rounded-full">
+                          <Bus className="h-5 w-5 text-muted-foreground" />
+                        </div>
+                        <div>
+                          <p className="font-semibold">{trip.routeNumber}</p>
+                          <p className="text-muted-foreground text-xs">{trip.departureTime}</p>
+                        </div>
                       </div>
-                      <div>
-                        <p className="font-semibold">{trip.routeNumber}</p>
-                        <p className="text-muted-foreground text-xs">{trip.departureTime}</p>
-                      </div>
+                      <p className="font-bold text-primary">₦{trip.price.toLocaleString()}</p>
                     </div>
-                    <p className="font-bold text-primary">₦{trip.price.toLocaleString()}</p>
-                  </div>
-                  {index < recentHistory.length - 1 && <Separator />}
-                </React.Fragment>
-              ))}
+                  </Link>
+                ))}
+              </div>
             </CardContent>
           </Card>
         </section>

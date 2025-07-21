@@ -50,7 +50,7 @@ export default function TripStatusPage() {
     if (path.length < 2) return;
     
     let step = 0;
-    const animationSpeed = 0.0005;
+    const animationSpeed = 0.009;
 
     const interval = setInterval(() => {
       const pointIndex = Math.floor(step * path.length);

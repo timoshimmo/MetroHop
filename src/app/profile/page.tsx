@@ -1,11 +1,12 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Card, CardContent } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
-import { ChevronRight, User, Settings, Shield, LogOut, CreditCard } from 'lucide-react';
+import { ChevronRight, User, Settings, Shield, LogOut, CreditCard, Award } from 'lucide-react';
 
 const menuItems = [
   { icon: User, text: 'Edit Profile', href: '#' },
   { icon: CreditCard, text: 'Payment Methods', href: '#' },
+  { icon: Award, text: 'Rewards', href: '/rewards' },
   { icon: Settings, text: 'Settings', href: '#' },
   { icon: Shield, text: 'Help & Support', href: '#' },
 ];

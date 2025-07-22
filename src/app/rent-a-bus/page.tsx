@@ -11,20 +11,20 @@ import { Label } from '@/components/ui/label';
 import Link from 'next/link';
 import { Separator } from '@/components/ui/separator';
 
-const HOURLY_RATE_BUS = 20000;
-const HOURLY_RATE_DRIVER = 5000;
+const DAILY_RATE_BUS = 150000;
+const DAILY_RATE_DRIVER = 40000;
 
 export default function RentABusPage() {
   const [rentalType, setRentalType] = useState('bus');
-  const [duration, setDuration] = useState([8]); // Default 8 hours
+  const [duration, setDuration] = useState([1]); // Default 1 day
 
-  const hourlyRate = useMemo(() => {
-    return rentalType === 'bus' ? HOURLY_RATE_BUS : HOURLY_RATE_DRIVER;
+  const dailyRate = useMemo(() => {
+    return rentalType === 'bus' ? DAILY_RATE_BUS : DAILY_RATE_DRIVER;
   }, [rentalType]);
 
   const totalCost = useMemo(() => {
-    return hourlyRate * duration[0];
-  }, [hourlyRate, duration]);
+    return dailyRate * duration[0];
+  }, [dailyRate, duration]);
 
   return (
     <div className="flex flex-col h-full bg-muted/30">
@@ -82,13 +82,13 @@ export default function RentABusPage() {
                     <Clock className="h-5 w-5" />
                     <span>Duration</span>
                 </div>
-                <span className="text-2xl font-bold font-headline text-primary">{duration[0]} hours</span>
+                <span className="text-2xl font-bold font-headline text-primary">{duration[0]} day{duration[0] > 1 ? 's' : ''}</span>
             </div>
             <Slider
-              defaultValue={[8]}
+              defaultValue={[1]}
               value={duration}
               onValueChange={setDuration}
-              max={24}
+              max={30}
               step={1}
               min={1}
             />
@@ -103,12 +103,12 @@ export default function RentABusPage() {
                     <span className="font-medium capitalize">{rentalType} Rental</span>
                 </div>
                 <div className="flex justify-between items-center text-sm">
-                    <span className="text-muted-foreground">Hourly Rate</span>
-                    <span className="font-medium">₦{hourlyRate.toLocaleString()}/hr</span>
+                    <span className="text-muted-foreground">Daily Rate</span>
+                    <span className="font-medium">₦{dailyRate.toLocaleString()}/day</span>
                 </div>
                 <div className="flex justify-between items-center text-sm">
                     <span className="text-muted-foreground">Duration</span>
-                    <span className="font-medium">{duration[0]} hr(s)</span>
+                    <span className="font-medium">{duration[0]} day(s)</span>
                 </div>
                 <Separator />
                  <div className="flex justify-between items-center text-lg">

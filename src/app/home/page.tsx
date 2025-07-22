@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Separator } from '@/components/ui/separator';
-import { Settings, Plus, Star, History, ArrowRight, Bus, Globe, Circle } from 'lucide-react';
+import { Settings, Plus, Star, History, ArrowRight, Bus, Globe, Circle, CarFront } from 'lucide-react';
 import { TicketCard } from '@/components/ticket-card';
 import { myTickets, promos, historyTrips } from '@/lib/data';
 import React from 'react';
@@ -56,20 +56,28 @@ export default function HomePage() {
           </CardContent>
         </Card>
         
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-3 gap-4">
           <Link href="/inter-city">
             <Card className="shadow-md hover:bg-primary/10 transition-colors cursor-pointer">
-              <CardContent className="p-4 flex flex-col items-center justify-center gap-2 text-center h-32">
-                <Globe className="h-8 w-8 text-primary" />
-                <p className="font-semibold">Inter-city</p>
+              <CardContent className="p-3 flex flex-col items-center justify-center gap-2 text-center h-28">
+                <Globe className="h-7 w-7 text-primary" />
+                <p className="font-semibold text-sm">Inter-city</p>
               </CardContent>
             </Card>
           </Link>
           <Link href="/routes">
             <Card className="shadow-md hover:bg-primary/10 transition-colors cursor-pointer">
-              <CardContent className="p-4 flex flex-col items-center justify-center gap-2 text-center h-32">
-                <Bus className="h-8 w-8 text-primary" />
-                <p className="font-semibold">Intra-city</p>
+              <CardContent className="p-3 flex flex-col items-center justify-center gap-2 text-center h-28">
+                <Bus className="h-7 w-7 text-primary" />
+                <p className="font-semibold text-sm">Intra-city</p>
+              </CardContent>
+            </Card>
+          </Link>
+          <Link href="/rent-a-bus">
+            <Card className="shadow-md hover:bg-primary/10 transition-colors cursor-pointer">
+              <CardContent className="p-3 flex flex-col items-center justify-center gap-2 text-center h-28">
+                <CarFront className="h-7 w-7 text-primary" />
+                <p className="font-semibold text-sm">Rent a Bus</p>
               </CardContent>
             </Card>
           </Link>

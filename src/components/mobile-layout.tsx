@@ -6,7 +6,7 @@ import { Suspense } from 'react'
 
 export function MobileLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const noNavRoutes = ['/', '/booking-successful'];
+  const noNavRoutes = ['/', '/booking-successful', '/rent-a-bus'];
   const showBottomNav = !noNavRoutes.includes(pathname) && !pathname.startsWith('/signup');
 
   return (

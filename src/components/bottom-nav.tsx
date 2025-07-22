@@ -2,14 +2,14 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, History, User, Ticket, Award } from 'lucide-react';
+import { Home, History, User, Ticket, Award, CarFront } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const navItems = [
   { href: '/home', label: 'Home', icon: Home },
   { href: '/history', label: 'History', icon: History },
+  { href: '/rent-a-bus', label: 'Rentals', icon: CarFront },
   { href: '/tickets', label: 'My Ticket', icon: Ticket },
-  { href: '/rewards', label: 'Rewards', icon: Award },
   { href: '/profile', label: 'Account', icon: User },
 ];
 

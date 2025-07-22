@@ -2,7 +2,7 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import { ArrowLeft, Bus, User, Clock } from 'lucide-react';
+import { ArrowLeft, Bus, User, Clock, Armchair } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Slider } from '@/components/ui/slider';
@@ -11,16 +11,24 @@ import { Label } from '@/components/ui/label';
 import Link from 'next/link';
 import { Separator } from '@/components/ui/separator';
 
-const DAILY_RATE_BUS = 150000;
+const BUS_RATES = {
+  '14': 150000,
+  '30': 250000,
+  '50': 400000,
+};
 const DAILY_RATE_DRIVER = 40000;
 
 export default function RentABusPage() {
   const [rentalType, setRentalType] = useState('bus');
   const [duration, setDuration] = useState([1]); // Default 1 day
+  const [busSize, setBusSize] = useState<keyof typeof BUS_RATES>('14');
 
   const dailyRate = useMemo(() => {
-    return rentalType === 'bus' ? DAILY_RATE_BUS : DAILY_RATE_DRIVER;
-  }, [rentalType]);
+    if (rentalType === 'driver') {
+      return DAILY_RATE_DRIVER;
+    }
+    return BUS_RATES[busSize];
+  }, [rentalType, busSize]);
 
   const totalCost = useMemo(() => {
     return dailyRate * duration[0];
@@ -44,7 +52,7 @@ export default function RentABusPage() {
           </CardHeader>
           <CardContent>
             <RadioGroup 
-              defaultValue="bus" 
+              value={rentalType}
               className="grid grid-cols-2 gap-4"
               onValueChange={(value) => setRentalType(value)}
             >
@@ -52,7 +60,7 @@ export default function RentABusPage() {
                 <RadioGroupItem value="bus" id="bus" className="peer sr-only" />
                 <Label
                   htmlFor="bus"
-                  className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
+                  className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary cursor-pointer"
                 >
                   <Bus className="mb-3 h-8 w-8" />
                   Bus
@@ -62,7 +70,7 @@ export default function RentABusPage() {
                 <RadioGroupItem value="driver" id="driver" className="peer sr-only" />
                 <Label
                   htmlFor="driver"
-                  className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
+                  className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary cursor-pointer"
                 >
                   <User className="mb-3 h-8 w-8" />
                   Driver
@@ -72,11 +80,39 @@ export default function RentABusPage() {
           </CardContent>
         </Card>
 
+        {rentalType === 'bus' && (
+          <Card className="shadow-md">
+            <CardHeader>
+              <CardTitle className="text-lg">Select Bus Size</CardTitle>
+            </CardHeader>
+            <CardContent>
+               <RadioGroup 
+                value={busSize}
+                className="grid grid-cols-3 gap-4"
+                onValueChange={(value) => setBusSize(value as keyof typeof BUS_RATES)}
+              >
+                {Object.keys(BUS_RATES).map((size) => (
+                  <div key={size}>
+                    <RadioGroupItem value={size} id={`bus-${size}`} className="peer sr-only" />
+                    <Label
+                      htmlFor={`bus-${size}`}
+                      className="flex flex-col items-center justify-center rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary cursor-pointer text-center"
+                    >
+                      <Armchair className="mb-2 h-6 w-6" />
+                      {size} Seater
+                    </Label>
+                  </div>
+                ))}
+              </RadioGroup>
+            </CardContent>
+          </Card>
+        )}
+
         <Card className="shadow-md">
           <CardHeader>
             <CardTitle className="text-lg">Select Duration</CardTitle>
           </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent className="space-y-4 pt-4">
             <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2 text-muted-foreground">
                     <Clock className="h-5 w-5" />
@@ -100,7 +136,7 @@ export default function RentABusPage() {
                 <h3 className="text-lg font-semibold">Cost Breakdown</h3>
                 <div className="flex justify-between items-center text-sm">
                     <span className="text-muted-foreground">Service Type</span>
-                    <span className="font-medium capitalize">{rentalType} Rental</span>
+                    <span className="font-medium capitalize">{rentalType === 'bus' ? `${busSize}-Seater Bus` : 'Driver'} Rental</span>
                 </div>
                 <div className="flex justify-between items-center text-sm">
                     <span className="text-muted-foreground">Daily Rate</span>

@@ -158,9 +158,11 @@ export default function RentABusPage() {
       </main>
       
       <footer className="p-4 border-t bg-background sticky bottom-0 z-10">
-        <Button size="lg" className="w-full h-14 text-lg font-bold">
-          Proceed to Book
-        </Button>
+        <Link href="/rent-a-bus/success" className="w-full">
+            <Button size="lg" className="w-full h-14 text-lg font-bold">
+              Request Booking
+            </Button>
+        </Link>
       </footer>
     </div>
   );

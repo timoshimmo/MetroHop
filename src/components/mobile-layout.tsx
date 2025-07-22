@@ -1,3 +1,4 @@
+
 'use client';
 
 import { BottomNav } from './bottom-nav';
@@ -6,7 +7,7 @@ import { Suspense } from 'react'
 
 export function MobileLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const noNavRoutes = ['/', '/booking-successful', '/rent-a-bus'];
+  const noNavRoutes = ['/', '/booking-successful', '/rent-a-bus', '/rent-a-bus/success'];
   const showBottomNav = !noNavRoutes.includes(pathname) && !pathname.startsWith('/signup');
 
   return (

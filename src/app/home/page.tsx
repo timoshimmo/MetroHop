@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Separator } from '@/components/ui/separator';
-import { Settings, Plus, Star, History, ArrowRight, Bus, Globe, Circle, CarFront } from 'lucide-react';
+import { Plus, Star, History, ArrowRight, Bus, Globe, Circle, CarFront } from 'lucide-react';
 import { TicketCard } from '@/components/ticket-card';
 import { myTickets, promos, historyTrips } from '@/lib/data';
 import React from 'react';
@@ -27,9 +27,6 @@ export default function HomePage() {
           <p className="text-sm text-muted-foreground">Good morning,</p>
           <h1 className="text-2xl font-bold font-headline">Bryan Alexander</h1>
         </div>
-        <Button variant="ghost" size="icon">
-          <Settings className="h-5 w-5" />
-        </Button>
       </header>
 
       <main className="flex-1 overflow-y-auto p-4 space-y-6">
